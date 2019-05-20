@@ -1,11 +1,31 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <script src="//cdn.jsdelivr.net/npm/phaser@3.17.0/dist/phaser-arcade-physics.min.js"></script>
         <script src="//cdn.jsdelivr.net/npm/phaser@3.17.0/dist/phaser.js"></script>
-        <script src="main.js"></script>
+        <script src="inputhandler.js"></script>
+        <script src="/entities/entity.js"></script>
         <script src="/entities/player.js"></script>
+        <script src="main.js"></script>
+
+        <style>
+        #test {
+			font-family: Consolas;
+			font-size: 20px;
+            font-weight: normal;
+			color: #FFFFFF;
+			background-color: #000000;
+			
+		}
+        </style>
     </head>
     <body>
+        <p id="test">
+            !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\] <br>
+            ^_`abcdefghijklmnopqrstuvwxyz{|}~ÇüéâäàåçêëèïîìÄÅÉæÆôöòûùÿÖÜø£Ø×ƒáíóúñÑ <br>
+            ªº¿®¬½¼¡«»░▒▓│┤ÁÂÀ©╣║╗╝¢¥┐└┴┬├─┼ãÃ╚╔╩╦╠═╬¤ðÐÊËÈıÍÎÏ┘┌█▄¦Ì▀ÓßÔÒõÕµþÞÚÛÙýÝ¯´­±‗¾¶§÷¸°¨·¹³²■ <br>
+        </p>
+        
         <div id="game"></div>
     </body>
 </html>
