@@ -8,12 +8,14 @@ class Entity {
         this.speed = (parms.speed) ? parms.speed : 1;
         this.v_x = 0;
         this.v_y = 0;
+
+        let col_width = (parms.col_width) ? parms.col_width : 10;
+        let col_height = (parms.col_height) ? parms.col_height : 20;
         
         // collider
-        this.rect = scene.add.rectangle(this.x, this.y, 10, 20).setStrokeStyle(1, 0xff0000);
-
+        this.rect = scene.add.rectangle(this.x, this.y, col_width, col_height).setStrokeStyle(1, 0xff0000);
         this.rect.entity = this;
-        //new Phaser.GameObjects.Zone(scene, this.x, this.y, 10, 20);
+        
         this.collider = scene.physics.add.existing(this.rect);
         
         
@@ -33,7 +35,7 @@ class Entity {
             s.y = this.y;
         }
         
-        console.log('New Eintity: ', this);
+        //console.log('New Eintity: ', this);
     }
 
     setpos(n_x, n_y) {
@@ -56,12 +58,13 @@ class Entity {
         this.rect.y = this.y;
     }
 
-    destroy() {
-        console.log(`${this} destroyed...`);
+    destroy(callback=()=>{}) {
         for(let s of this.skins){
             s.destroy();
         }
         this.collider.destroy();
         this.rect.destroy();
+
+        callback();
     }
 }

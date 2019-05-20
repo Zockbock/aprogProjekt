@@ -6,7 +6,7 @@ window.onload = () => {
 }
 
 let gameConfig = {
-    type: Phaser.WEBGL,
+    type: Phaser.AUTO,
     width: gameWidth,
     height: gameHeight,
     parent: 'game',
@@ -29,12 +29,14 @@ let inputHandler;
 let keyW;
 let player;
 let coin;
+let coinspawner;
 
 function preload(){
     
 }
     
 function create(){
+    console.log(this);
 
     inputHandler = new InputHandler(this);
     keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -42,21 +44,22 @@ function create(){
     //player = new Player(this, [{char:'Å', color:'#FFFFFF'}, {char:'--', color:'#FFFFFF'}, {char:'', color:'#FFFFFF'}]);
     player = new Player(this, [{char:'@', color:'#FFFFFF'}], {x:500, y:300, speed:3});
 
+
     coin = new Coin(this, {x:400, y:280});
 
-    // collison
-    //this.physics.add.collider(player.collider, testEntity.collider, () => {console.log("collision!")});
+    coinspawner = new Coinspawner(this, 5);
 
     drawCross(this);
 }
     
 function update(){
     player.update();
+    coinspawner.update();
 }
 
 
-function drawCross(context){
-    let graphics = context.add.graphics();
+function drawCross(scene){
+    let graphics = scene.add.graphics();
     
     graphics.lineStyle(1, 0x00ff00);
 
