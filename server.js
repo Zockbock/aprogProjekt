@@ -46,7 +46,7 @@ let sql = `SELECT * FROM user`;
 db.all(sql, (error,rows) => {
     if(error){
         if(rows == null){
-            db.run(`CREATE TABLE user (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, pw TEXT NOT NULL)`, (error) => {
+            db.run(`CREATE TABLE user (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL UNIQUE, pw TEXT NOT NULL)`, (error) => {
                 if(error){
                     console.log(error.message);
                 } else {
@@ -74,7 +74,6 @@ app.post('/run', (req, res) => {
       if(err){
         console.log(err.message);
       } else {
-        console.log(name, pw);
         for(elem in rows){
           if(this.name == elem.name && this.pw == elem.pw){
             res.render(__dirname + '/views/run.ejs');
@@ -87,4 +86,27 @@ app.post('/run', (req, res) => {
       }
     });
   }
+});
+
+// Register
+var registered = false;
+app.get('/registerLink', (req,res) => {
+  registered = false;
+  res.render('register.ejs', {registered});
+});
+
+// Register send
+app.post('/register', (req, res) => {
+  const username = req.body.name;
+  const userpw = req.body.pw;
+  db.run(`INSERT INTO user (name,pw) VALUES('${username}', '${userpw}')`, (err) => {
+    if(err){
+      console.log(err.message);
+      res.render('register.ejs', {err})
+    } else {
+      console.log("User created");
+      registered = true;
+      res.render('register.ejs', {registered});
+    }
+  });
 });

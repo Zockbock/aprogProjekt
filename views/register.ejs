@@ -2,21 +2,20 @@
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="../styles/style.css"> 
-        
-        <title>
-            Willkommen bei Ascadiia
-        </title>
+
+        <title>Register</title>
     </head>
     <body>
-        <div id="login">
-            <form action="/run" method="POST">
+        <% if(registered == false) { %>
+            <form action="/register" method="POST">
                 <input type="text" required name="name" id="name" placeholder="Username" class="input">
                 <input type="password" required name="pw" id="pw" placeholder="Password" class="input">
-                <button type="submit" class="btn-login">Login</button>
+                <button type="submit" class="btn-login">Register</button>
             </form>
+        <% } else { %>
             <form>
-                <button onclick="window.open('/registerLink', '_blank', 'location=yes,height=500,width=400')" class="btn-login">Register</button>
+                <button class="btn-login" onclick="window.close()">Close</button>
             </form>
-        </div>
+        <% } %>
     </body>
 </html>
