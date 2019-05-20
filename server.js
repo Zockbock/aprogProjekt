@@ -27,6 +27,9 @@ let db = new sqlite3.Database('db/user.db', (error) => {
   }
 });
 
+// Link folders
+app.use(express.static(__dirname + "/game"));
+
 // Server starten
 const port = 3000;
 app.listen(port, function(){
@@ -36,6 +39,11 @@ app.listen(port, function(){
 // Index 
 app.get('/', function(req, res){
     res.render(__dirname + '/views/index.ejs');
+});
+
+// Game
+app.get('/game', function(req, res){
+  res.render('game');
 });
 
 // Auf CSS "hinweisen"
