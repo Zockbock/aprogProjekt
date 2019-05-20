@@ -28,7 +28,7 @@ let game = new Phaser.Game(gameConfig);
 let inputHandler;
 let keyW;
 let player;
-let testEntity;
+let coin;
 
 function preload(){
     
@@ -42,18 +42,16 @@ function create(){
     //player = new Player(this, [{char:'Å', color:'#FFFFFF'}, {char:'--', color:'#FFFFFF'}, {char:'', color:'#FFFFFF'}]);
     player = new Player(this, [{char:'@', color:'#FFFFFF'}], {x:500, y:300, speed:3});
 
-    testEntity = new Entity(this, [{char:'©', color:'#dab420'}], {x:200, y:200});
+    coin = new Coin(this, {x:400, y:280});
 
     // collison
-    this.physics.add.collider(player.collider, testEntity.collider, () => {console.log("collision!")});
-    console.log(this);
+    //this.physics.add.collider(player.collider, testEntity.collider, () => {console.log("collision!")});
 
     drawCross(this);
 }
     
 function update(){
     player.update();
-    testEntity.update();
 }
 
 
