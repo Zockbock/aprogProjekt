@@ -8,7 +8,7 @@ class InputHandler {
 
         console.log(this);
     }
-
+    
     keydown(input){
         switch(input[0]){
             case 'u':

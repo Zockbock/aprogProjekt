@@ -1,4 +1,15 @@
+/**
+ * Entity Class.
+ * @classdesc The parent for every moving Object in the game.
+ */
+
 class Entity {
+    /**
+     * @constructor
+     * @param  {Scene} scene
+     * @param  {Array} skins
+     * @param  {Object} parms={}
+     */
     constructor(scene, skins, parms={}) {
         this.scene = scene;
 
@@ -13,7 +24,7 @@ class Entity {
         let col_height = (parms.col_height) ? parms.col_height : 20;
         
         // collider
-        this.rect = scene.add.rectangle(this.x, this.y, col_width, col_height).setStrokeStyle(1, 0xff0000);
+        this.rect = scene.add.zone(this.x, this.y, col_width, col_height);//.setStrokeStyle(1, 0xff0000);
         this.rect.entity = this;
         
         this.collider = scene.physics.add.existing(this.rect);

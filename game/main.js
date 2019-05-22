@@ -34,18 +34,17 @@ let coinspawner;
 function preload(){
     
 }
-    
+
 function create(){
     console.log(this);
 
     inputHandler = new InputHandler(this);
-    keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
 
     //player = new Player(this, [{char:'Å', color:'#FFFFFF'}, {char:'--', color:'#FFFFFF'}, {char:'', color:'#FFFFFF'}]);
     player = new Player(this, [{char:'@', color:'#FFFFFF'}], {x:500, y:300, speed:3});
 
 
-    coin = new Coin(this, {x:400, y:280});
+    //coin = new Coin(this, {x:400, y:280});
 
     coinspawner = new Coinspawner(this, 5);
 
@@ -57,7 +56,12 @@ function update(){
     coinspawner.update();
 }
 
-
+/**
+ * Draws a vertical and horizontal line in the center of the given scene.
+ * For Debugging purposes.
+ * 
+ * @param {Scene} scene The scene the lines get drawn on.
+ */
 function drawCross(scene){
     let graphics = scene.add.graphics();
     
