@@ -28,8 +28,11 @@ let game = new Phaser.Game(gameConfig);
 let inputHandler;
 let keyW;
 let player;
-let coin;
 let coinspawner;
+
+let coincnt_text;
+
+let coinscnt = 0;
 
 function preload(){
     
@@ -43,12 +46,11 @@ function create(){
     //player = new Player(this, [{char:'Å', color:'#FFFFFF'}, {char:'--', color:'#FFFFFF'}, {char:'', color:'#FFFFFF'}]);
     player = new Player(this, [{char:'@', color:'#FFFFFF'}], {x:500, y:300, speed:3});
 
-
-    //coin = new Coin(this, {x:400, y:280});
-
     coinspawner = new Coinspawner(this, 5);
 
-    drawCross(this);
+    coincnt_text = new Hudtext(this, 'Coins: ', {x:20, y:20});
+
+    //drawCross(this);
 }
     
 function update(){
