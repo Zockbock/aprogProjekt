@@ -2,8 +2,8 @@ class Hudtext {
     constructor(scene, text, parms={}) {
         this.scene = scene;
 
-        this.x = (parms.x) ? parms.x : 10;
-        this.y = (parms.y) ? parms.y : 10;
+        this.x = (parms.x !== undefined) ? parms.x : 0;
+        this.y = (parms.y !== undefined) ? parms.y : 0;
 
         this.color = (parms.color) ? parms.color : '#FFFFFF'
 

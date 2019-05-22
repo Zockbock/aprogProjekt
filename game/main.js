@@ -48,7 +48,7 @@ function create(){
 
     coinspawner = new Coinspawner(this, 5);
 
-    coincnt_text = new Hudtext(this, 'Coins: ', {x:20, y:20});
+    coincnt_text = new Hudtext(this, 'Coins: ', {x:10, y:10});
 
     //drawCross(this);
 }
@@ -56,6 +56,8 @@ function create(){
 function update(){
     player.update();
     coinspawner.update();
+
+    coincnt_text.settext(`Coins: ${coinscnt}`);
 }
 
 /**

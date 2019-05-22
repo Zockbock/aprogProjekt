@@ -18,6 +18,8 @@ class Coin extends Entity {
     collected(player, col_coin){
         col_coin.entity.got_collected = true;
         col_coin.entity.destroy();
+
+        coinscnt++;
     }
 }
 

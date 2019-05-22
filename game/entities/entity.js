@@ -13,15 +13,15 @@ class Entity {
     constructor(scene, skins, parms={}) {
         this.scene = scene;
 
-        this.x = (parms.x) ? parms.x : 10;
-        this.y = (parms.y) ? parms.y : 10;
+        this.x = (parms.x !== undefined) ? parms.x : 10;
+        this.y = (parms.y !== undefined) ? parms.y : 10;
         
-        this.speed = (parms.speed) ? parms.speed : 1;
+        this.speed = (parms.speed !== undefined) ? parms.speed : 1;
         this.v_x = 0;
         this.v_y = 0;
 
-        let col_width = (parms.col_width) ? parms.col_width : 10;
-        let col_height = (parms.col_height) ? parms.col_height : 20;
+        let col_width = (parms.col_width !== undefined) ? parms.col_width : 10;
+        let col_height = (parms.col_height !== undefined) ? parms.col_height : 20;
         
         // collider
         this.rect = scene.add.zone(this.x, this.y, col_width, col_height);//.setStrokeStyle(1, 0xff0000);
