@@ -1,5 +1,16 @@
+/**
+ * Entity Class.
+ * @classdesc The parent for every moving Object in the game.
+ */
+
 class Entity {
-    constructor(scene, skins, parms={}){
+    /**
+     * @constructor
+     * @param  {Scene} scene
+     * @param  {Array} skins
+     * @param  {Object} parms={}
+     */
+    constructor(scene, skins, parms={}) {
         this.scene = scene;
 
         this.x = (parms.x) ? parms.x : 10;
@@ -8,10 +19,14 @@ class Entity {
         this.speed = (parms.speed) ? parms.speed : 1;
         this.v_x = 0;
         this.v_y = 0;
+
+        let col_width = (parms.col_width) ? parms.col_width : 10;
+        let col_height = (parms.col_height) ? parms.col_height : 20;
         
         // collider
-        this.rect = scene.add.rectangle(this.x, this.y, 10, 20).setStrokeStyle(1, 0xff0000);
-        //new Phaser.GameObjects.Zone(scene, this.x, this.y, 10, 20);
+        this.rect = scene.add.zone(this.x, this.y, col_width, col_height);//.setStrokeStyle(1, 0xff0000);
+        this.rect.entity = this;
+        
         this.collider = scene.physics.add.existing(this.rect);
         
         
@@ -31,10 +46,10 @@ class Entity {
             s.y = this.y;
         }
         
-        console.log('New Eintity: ', this);
+        //console.log('New Eintity: ', this);
     }
 
-    setpos(n_x, n_y){
+    setpos(n_x, n_y) {
         this.x = n_x;
         this.y = n_y;
     }
@@ -52,5 +67,15 @@ class Entity {
 
         this.rect.x = this.x;
         this.rect.y = this.y;
+    }
+
+    destroy(callback=()=>{}) {
+        for(let s of this.skins){
+            s.destroy();
+        }
+        this.collider.destroy();
+        this.rect.destroy();
+
+        callback();
     }
 }
