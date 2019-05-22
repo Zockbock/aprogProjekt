@@ -159,3 +159,8 @@ app.post('/register', (req, res) => {
   
   });
 });
+
+app.post('/logout', (req, res) => {
+  delete req.session['sessionValue'];
+  res.render('index');
+});
