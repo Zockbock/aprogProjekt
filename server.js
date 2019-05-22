@@ -50,6 +50,15 @@ app.get('/game', function(req, res){
 const bcrypt = require('bcrypt');
 const saltrounds = 10;
 
+// Session initialisieren
+const session = require('express-session');
+app.use(session({
+ secret: 'example',
+ resave: false,
+ saveUninitialized: true
+}));
+
+
 // Auf CSS "hinweisen"
 app.use(express.static(require('path').join(__dirname, "/")));
 
@@ -75,13 +84,34 @@ db.all(sql, (error,rows) => {
       }
     }
 });
+db.all(`SELECT * FROM session`, (err, rows) => {
+  if(err){
+    if(rows == null){
+      db.run(`CREATE TABLE session (name TEXT NOT NULL)`, (error) => {
+        if(error){
+          console.log(error);
+        } else {
+          console.log("Initialized table session");
+        }
+      })
+    }
+  }
+});
 
 // Checking User methode
-function checkUser(username, password, res){
+function checkUser(username, password, req, res){
   db.get(`SELECT * FROM user WHERE name = "${username}"`,(err, user) => {
     bcrypt.compare(password, user.pw, (err, match) => {
       if (match){
-        res.render(__dirname + '/views/run.ejs');
+        req.session['sessionValue'] = username;
+        const sessionValue = req.session['sessionValue'];
+        res.render(__dirname + '/views/run.ejs', {sessionValue});
+        // if (!req.session['sessionValue']){
+        //   console.log("error")
+        // } else {
+        //   const sessionValue = req.session['sessionValue'];
+        //   console.log(sessionValue);
+        // }
       } else {
         console.log("Wrong password or username.");
         res.render('index.ejs');
@@ -99,7 +129,7 @@ app.post('/run', (req, res) => {
     console.log("Please insert a username and password.");
     res.render('index.ejs');
   } else {
-    checkUser(name, pw, res);
+    checkUser(name, pw, req, res);
   }
 });
 
