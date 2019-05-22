@@ -65,10 +65,10 @@ db.all(sql, (error,rows) => {
               bcrypt.hash("password", saltrounds, (err, hash) => {
                 console.log("Initialized table user");
                 db.run(`INSERT INTO user(name, pw) VALUES ("admin", "${hash}")`, (error) => {
-              });
-                if(error){
-                  console.log(error.message);
-                }
+                  if(error){
+                    console.log(error.message);
+                  }
+                });
               });
             }
         });
@@ -77,16 +77,17 @@ db.all(sql, (error,rows) => {
 });
 
 // Checking User methode
-async function checkUser(username, password, res){
-  const user = db.all(`SELECT * FROM user WHERE name = "${username}"`);
-  await bcrypt.compare(password, user.pw, (err, result) => {
-    if (result == true){
-      res.render(__dirname + '/views/run.ejs');
-    } else {
-      console.log("Wrong password or username.");
-      res.render('index.ejs');
-      return;
-    }
+function checkUser(username, password, res){
+  db.get(`SELECT * FROM user WHERE name = "${username}"`,(err, user) => {
+    bcrypt.compare(password, user.pw, (err, match) => {
+      if (match){
+        res.render(__dirname + '/views/run.ejs');
+      } else {
+        console.log("Wrong password or username.");
+        res.render('index.ejs');
+        return;
+      }  
+    });
   });
 }
 
@@ -113,19 +114,18 @@ app.get('/registerLink', (req,res) => {
 app.post('/register', (req, res) => {
   const username = req.body.name;
   const userpw = req.body.pw;
-  let hashpw;
   bcrypt.hash(userpw, saltrounds, (err, hash) => {
-    hashpw = hash;
-  });
-  db.run(`INSERT INTO user (name,pw) VALUES('${username}', '${hashpw}')`, (err) => {
-    if(err){
-      console.log(err.message);
-      alert("User already exists.");
-      res.render('register.ejs', {registered}); 
-    } else {
-      console.log("User created");
-      registered = true;
-      res.render('register.ejs', {registered});
-    }
+    db.run(`INSERT INTO user (name,pw) VALUES('${username}', '${hash}')`, (error) => {
+      if(error){
+        console.log(error.message);
+        alert("User already exists.");
+        res.render('register.ejs', {registered}); 
+      } else {
+        console.log("User created");
+        registered = true;
+        res.render('register.ejs', {registered});
+      }
+    });
+  
   });
 });
