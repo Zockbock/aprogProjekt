@@ -1,5 +1,5 @@
 //mkdir of the directory of the db if it's not already existing
-var fs = require('fs');
+let fs = require('fs');
 if(!fs.existsSync('./db')){
   fs.mkdirSync('./db')
 }
@@ -46,6 +46,10 @@ app.get('/game', function(req, res){
   res.render('game');
 });
 
+// Bcrypt
+const bcrypt = require('bcrypt');
+const saltrounds = 10;
+
 // Auf CSS "hinweisen"
 app.use(express.static(require('path').join(__dirname, "/")));
 
@@ -53,22 +57,38 @@ app.use(express.static(require('path').join(__dirname, "/")));
 let sql = `SELECT * FROM user`;
 db.all(sql, (error,rows) => {
     if(error){
-        if(rows == null){
-            db.run(`CREATE TABLE user (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL UNIQUE, pw TEXT NOT NULL)`, (error) => {
+      if(rows == null){
+        db.run(`CREATE TABLE user (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL UNIQUE, pw TEXT NOT NULL)`, (error) => {
+            if(error){
+                console.log(error.message);
+            } else {
+              bcrypt.hash("password", saltrounds, (err, hash) => {
+                console.log("Initialized table user");
+                db.run(`INSERT INTO user(name, pw) VALUES ("admin", "${hash}")`, (error) => {
+              });
                 if(error){
-                    console.log(error.message);
-                } else {
-                    console.log("Initialized table user");
-                    db.run(`INSERT INTO user(name, pw) VALUES ("admin", "password")`, (error) => {
-                      if(error){
-                        console.log(error.message);
-                      }
-                    });
+                  console.log(error.message);
                 }
-            });
-        }
+              });
+            }
+        });
+      }
     }
 });
+
+// Checking User methode
+async function checkUser(username, password, res){
+  const user = db.all(`SELECT * FROM user WHERE name = "${username}"`);
+  await bcrypt.compare(password, user.pw, (err, result) => {
+    if (result == true){
+      res.render(__dirname + '/views/run.ejs');
+    } else {
+      console.log("Wrong password or username.");
+      res.render('index.ejs');
+      return;
+    }
+  });
+}
 
 // Login versuch
 app.post('/run', (req, res) => {
@@ -76,23 +96,9 @@ app.post('/run', (req, res) => {
   const pw = req.body.pw;
   if(name === "" && pw === ""){
     console.log("Please insert a username and password.");
-    res.render('index.ejs')
+    res.render('index.ejs');
   } else {
-    db.all(`SELECT * FROM user`, (err,rows) => {
-      if(err){
-        console.log(err.message);
-      } else {
-        for(elem in rows){
-          if(this.name == elem.name && this.pw == elem.pw){
-            res.render(__dirname + '/views/run.ejs');
-          } else {
-            console.log("Wrong password or username.");
-            res.render('index.ejs');
-            return;
-          }
-        }
-      }
-    });
+    checkUser(name, pw, res);
   }
 });
 
@@ -107,10 +113,15 @@ app.get('/registerLink', (req,res) => {
 app.post('/register', (req, res) => {
   const username = req.body.name;
   const userpw = req.body.pw;
-  db.run(`INSERT INTO user (name,pw) VALUES('${username}', '${userpw}')`, (err) => {
+  let hashpw;
+  bcrypt.hash(userpw, saltrounds, (err, hash) => {
+    hashpw = hash;
+  });
+  db.run(`INSERT INTO user (name,pw) VALUES('${username}', '${hashpw}')`, (err) => {
     if(err){
       console.log(err.message);
-      res.render('register.ejs', {err})
+      alert("User already exists.");
+      res.render('register.ejs', {registered}); 
     } else {
       console.log("User created");
       registered = true;
