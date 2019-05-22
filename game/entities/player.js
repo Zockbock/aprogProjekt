@@ -4,6 +4,12 @@ class Player extends Entity {
         super(scene, skins, parms)
     }
 
+    /**
+     * Updates the player.
+     * Must be called every frame.
+     * Moves the player by reading the properties of 'inputhandler' and
+     * updating the position accordingly.
+     */
     update(){
         this.v_x = 0;
         this.v_y = 0;

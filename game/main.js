@@ -1,9 +1,9 @@
 const gameWidth = 1000;
 const gameHeight = 600;
 
-window.onload = () => {
+/*window.onload = () => {
     
-}
+}*/
 
 let gameConfig = {
     type: Phaser.AUTO,
