@@ -1,7 +1,7 @@
 class Player extends Entity {
     constructor(scene, skins, parms){
         
-        super(scene, skins, parms)
+        super(scene, skins, parms);
     }
 
     /**

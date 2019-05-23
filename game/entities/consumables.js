@@ -32,7 +32,7 @@ class Coin extends Entity {
 }
 
 /**
- * 
+ * @classdesc A Coinspawner that creates and holds references to coins in its scene.
  */
 class Coinspawner {
     constructor(scene, max_coins, max_spawndelay=60, min_spawndelay=100) {

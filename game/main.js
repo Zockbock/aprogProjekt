@@ -31,6 +31,7 @@ let player;
 let coinspawner;
 
 let coincnt_text;
+let timer;
 
 let coinscnt = 0;
 
@@ -48,16 +49,20 @@ function create(){
 
     coinspawner = new Coinspawner(this, 5);
 
+    timer = new Timer(this, '--', 30, {x:gameWidth/2, y:10, origin:'centered'});
+    
     coincnt_text = new Hudtext(this, 'Coins: ', {x:10, y:10});
 
     //drawCross(this);
 }
     
 function update(){
-    player.update();
-    coinspawner.update();
+    timer.update();
 
     coincnt_text.settext(`Coins: ${coinscnt}`);
+    
+    player.update();
+    coinspawner.update();
 }
 
 /**
