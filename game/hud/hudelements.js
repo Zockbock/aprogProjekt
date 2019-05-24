@@ -12,6 +12,10 @@ class Hudtext {
         if(parms.origin == 'centered'){
             this.text_ele.setOrigin(0.5, 0);
         }
+
+        if(parms.origin_x !== undefined){
+            this.text_ele.setOrigin(parms.origin_x, 0);
+        }
     }
 
     settext(newText) {
@@ -40,5 +44,23 @@ class Timer extends Hudtext {
         this.frame_cnt++;
         
         this.settext(this.time);
+    }
+}
+
+
+class Highscore extends Hudtext {
+    constructor(scene, highscore, parms={}){
+        super(scene, `Highscore: --`, parms)
+        
+        this.highscore = highscore;
+
+        this.settext(`Highscore: ${this.highscore}`);
+    }
+
+    update(){
+        if(this.highscore < coinscnt){
+            this.highscore = coinscnt;
+            this.settext(`Highscore: ${this.highscore}`);
+        }
     }
 }

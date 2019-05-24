@@ -32,6 +32,7 @@ let coinspawner;
 
 let coincnt_text;
 let timer;
+let highscore_text;
 
 let coinscnt = 0;
 
@@ -49,9 +50,11 @@ function create(){
 
     coinspawner = new Coinspawner(this, 5);
 
-    timer = new Timer(this, '--', 30, {x:gameWidth/2, y:10, origin:'centered'});
+    timer = new Timer(this, '--', 60, {x:gameWidth/2, y:10, origin:'centered'});
     
     coincnt_text = new Hudtext(this, 'Coins: ', {x:10, y:10});
+
+    highscore_text = new Highscore(this, 10, {x:gameWidth - 10, y: 10, origin_x:1})
 
     //drawCross(this);
 }
@@ -63,6 +66,8 @@ function update(){
     
     player.update();
     coinspawner.update();
+
+    highscore_text.update();
 }
 
 /**
