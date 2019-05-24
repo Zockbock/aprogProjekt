@@ -8,7 +8,7 @@ class Entity {
     /**
      * @constructor
      * @param  {Scene} scene The scene this entity exists in. 
-     * @param  {Array} skins The Visual component of the entity in reversed render order. e.g.: [{char:'...', color:'#...'}, ...]
+     * @param  {Object[]} skins The Visual component of the entity in reversed render order. e.g.: [{char:'...', color:'#...'}, ...]
      * @param  {Object} parms={} Additional parameters.
      */
     constructor(scene, skins, parms={}) {
@@ -87,7 +87,7 @@ class Entity {
     /**
      * Called when Entity should be removed from the Scene.
      * Reference must be cleared individually.
-     * @param {*} callback callback function
+     * @param {Function} callback callback function
      */
     destroy(callback=()=>{}) {
         for(let s of this.skins){

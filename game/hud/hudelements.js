@@ -72,7 +72,7 @@ class FramedText {
         this.scene = scene;
 
         this.text = //text;
-        this.create_frame({width:15, height:10, ver:'║', hor: '═', corner:'╔╗╝╚'});
+        this.create_frame(15, 10, {ver:'║', hor: '═', corner:'╔╗╝╚'});
 
         this.x = (parms.x !== undefined) ? parms.x : 0;
         this.y = (parms.y !== undefined) ? parms.y : 0;
@@ -84,20 +84,42 @@ class FramedText {
         this.frame = this.scene.add.text(this.x, this.y, this.text, {fontFamily: "Consolas", fontSize: 20, color:this.frame_color});
     }
 
-    create_frame(parms={}){
+    /**
+     * Generates a frame with given width and height like this
+     * 
+     *  +---+
+     *  |   |
+     *  +---+ 
+     * 
+     * @param {Number} width The width of the frame in amount of character 
+     * @param {Number} height The height of the frame in amount of character 
+     * @param {Object} parms The look of the frame as values of an object:
+     *  ver:    vertical characters (left and rigth)
+     *  hor:    horizontal characters (top and bottom)
+     *  corner: a String of 1 or 4 characters that 
+     *          define(s) the look of the corners (clockwise)
+     *  char:   a single character that fills the whole frame 
+     *          (prioritised over every other argument)
+     * @returns the frame as a String with line breaks (\n)
+     */
+    create_frame(width, height, parms={}){
         let frame_text = '';
         
         // loop through all chars
-        for(let h = 0; h < parms.height; h++){
-            for(let w = 0; w < parms.width; w++){
+        for(let h = 0; h < height; h++){
+            for(let w = 0; w < width; w++){
 
                 // Set frame chars
+                // empty space
+                if((w > 0 && w < width - 1) && (h > 0 && h < height - 1)){
+                    frame_text += ' ';
+                }
                 // whole frame same char
-                if(parms.char !== undefined && ((h == 0 || h == parms.height - 1) || (w == 0 || w == parms.width - 1))){
+                else if(parms.char !== undefined && ((h == 0 || h == height - 1) || (w == 0 || w == width - 1))){
                     frame_text += parms.char;
                 }
                 // corners
-                else if((h == 0 || h == parms.height - 1) && (w == 0 || w == parms.width - 1)){
+                else if((w == 0 || w == width - 1) && (h == 0 || h == height - 1)){
                     // one symbol for all corners
                     if(typeof parms.corner === 'string' && parms.corner.length < 4){
                         frame_text += parms.corner[0];
@@ -116,17 +138,13 @@ class FramedText {
                         frame_text += 'c';
                     }
                 }
-                // left right
-                else if((h != 0 || h != parms.height - 1) && (w == 0 || w == parms.width - 1)){
-                    frame_text += parms.ver ? parms.ver : 'l';
-                } 
                 //top bottom
-                else if((h == 0 || h == parms.height - 1)){
+                else if((w != 0 || w != width - 1) && (h == 0 || h == height - 1)){
                     frame_text += parms.hor ? parms.hor : 't';
                 } 
-                // everything inside
-                else {
-                    frame_text += ' ';
+                // left right
+                else if((h != 0 || h != height - 1) ){
+                    frame_text += parms.ver ? parms.ver : 'l';
                 }
             }
 

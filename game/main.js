@@ -36,7 +36,7 @@ let highscore_text;
 
 let coinscnt = 0;
 
-//let framedTextTest;
+let framedTextTest;
 
 function preload(){
     
