@@ -36,6 +36,8 @@ let highscore_text;
 
 let coinscnt = 0;
 
+//let framedTextTest;
+
 function preload(){
     
 }
@@ -54,7 +56,9 @@ function create(){
     
     coincnt_text = new Hudtext(this, 'Coins: ', {x:10, y:10});
 
-    highscore_text = new Highscore(this, 10, {x:gameWidth - 10, y: 10, origin_x:1})
+    highscore_text = new Highscore(this, 10, {x:gameWidth - 10, y: 10, origin_x:1});
+
+    //framedTextTest = new FramedText(this, '', {x: 100, y: 100});
 
     //drawCross(this);
 }
