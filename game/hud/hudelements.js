@@ -72,7 +72,7 @@ class FramedText {
         this.scene = scene;
 
         this.text = //text;
-        this.create_frame(15, 10, {ver:'║', hor: '═', corner:'╔╗╝╚'});
+        this.create_frame(4, 4, {ver:'║', hor: '═', corner:'╔╗╝╚'}).join('\n');
 
         this.x = (parms.x !== undefined) ? parms.x : 0;
         this.y = (parms.y !== undefined) ? parms.y : 0;
@@ -100,10 +100,11 @@ class FramedText {
      *          define(s) the look of the corners (clockwise)
      *  char:   a single character that fills the whole frame 
      *          (prioritised over every other argument)
-     * @returns the frame as a String with line breaks (\n)
+     * @returns the frame as a String-Array
      */
     create_frame(width, height, parms={}){
-        let frame_text = '';
+        let frame = new Array();
+        let line_text = '';
         
         // loop through all chars
         for(let h = 0; h < height; h++){
@@ -112,46 +113,47 @@ class FramedText {
                 // Set frame chars
                 // empty space
                 if((w > 0 && w < width - 1) && (h > 0 && h < height - 1)){
-                    frame_text += ' ';
+                    line_text += ' ';
                 }
                 // whole frame same char
                 else if(parms.char !== undefined && ((h == 0 || h == height - 1) || (w == 0 || w == width - 1))){
-                    frame_text += parms.char;
+                    line_text += parms.char;
                 }
                 // corners
                 else if((w == 0 || w == width - 1) && (h == 0 || h == height - 1)){
                     // one symbol for all corners
                     if(typeof parms.corner === 'string' && parms.corner.length < 4){
-                        frame_text += parms.corner[0];
+                        line_text += parms.corner[0];
                     } 
                     
                     // spevific char for every corner
                     else if(typeof parms.corner === 'string' && parms.corner.length == 4){
-                        if(w == 0 && h == 0) frame_text += parms.corner[0];
-                        else if(w != 0 && h == 0) frame_text += parms.corner[1];
-                        else if(w != 0 && h != 0) frame_text += parms.corner[2];
-                        else if(w == 0 && h != 0) frame_text += parms.corner[3];
+                        if(w == 0 && h == 0) line_text += parms.corner[0];
+                        else if(w != 0 && h == 0) line_text += parms.corner[1];
+                        else if(w != 0 && h != 0) line_text += parms.corner[2];
+                        else if(w == 0 && h != 0) line_text += parms.corner[3];
                     }
 
                     // no corner char defined
                     else {
-                        frame_text += 'c';
+                        line_text += 'c';
                     }
                 }
                 //top bottom
                 else if((w != 0 || w != width - 1) && (h == 0 || h == height - 1)){
-                    frame_text += parms.hor ? parms.hor : 't';
+                    line_text += parms.hor ? parms.hor : 't';
                 } 
                 // left right
                 else if((h != 0 || h != height - 1) ){
-                    frame_text += parms.ver ? parms.ver : 'l';
+                    line_text += parms.ver ? parms.ver : 'l';
                 }
             }
 
-            // add linebreak
-            frame_text += '\n';
+            // next line
+            frame.push(line_text);
+            line_text = '';
         }
 
-        return frame_text;
+        return frame;
     }
 }
