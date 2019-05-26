@@ -71,8 +71,7 @@ class FramedText {
     constructor(scene, text, parms={}){
         this.scene = scene;
 
-        this.text = //text;
-        this.create_frame(4, 4, {ver:'║', hor: '═', corner:'╔╗╝╚'}).join('\n');
+        this.text = this.fillframe(this.create_frame(15, 10, {ver:'║', hor: '═', corner:'╔╗╝╚'}), text, 1).join('\n');
 
         this.x = (parms.x !== undefined) ? parms.x : 0;
         this.y = (parms.y !== undefined) ? parms.y : 0;
@@ -126,7 +125,7 @@ class FramedText {
                         line_text += parms.corner[0];
                     } 
                     
-                    // spevific char for every corner
+                    // specific char for every corner
                     else if(typeof parms.corner === 'string' && parms.corner.length == 4){
                         if(w == 0 && h == 0) line_text += parms.corner[0];
                         else if(w != 0 && h == 0) line_text += parms.corner[1];
@@ -155,5 +154,55 @@ class FramedText {
         }
 
         return frame;
+    }
+    
+    /**
+     * Fills a frame with text.
+     * @param {String[]} frame The Frame as a String Array
+     * @param {String[]} text The Text to be filled in as a String array
+     * @param {Number} [margin=0] the gap in spaces put before and behind all text lines
+     * @returns {String[]} The frame filled with text as a string array
+     */
+    fillframe(frame, text, margin=0) {
+        let filledFrame = new Array();
+
+        for(let l = 0; l < frame.length; l++){
+            console.log`l: ${l} text.length: ${text.length}`;
+            if(l < text.length + 1 && l > 0){
+                let line = '';
+                let charindex = 0;
+                
+                // go through caracters
+                for(let c = 0; c < frame[l].length; c++){
+                    // when all chars inserted 
+                    if(charindex >= text[l - 1].length){
+                        line += frame[l][c];
+                    }
+                    // keep first char(s) / left border + margin
+                    else if(c < 1 + margin){
+                        line += frame[l][c];
+                    }
+                    // keep last char(s) / right border + margin
+                    else if(c >= frame[l].length - (1 + margin)){
+                        line += frame[l][c];
+                    }
+                    // fill middle part of the frame line with given text
+                    else {
+                        line += text[l - 1][charindex];
+                        charindex++;
+                    } 
+                }
+                console.log(line);
+                filledFrame.push(line);
+            }
+            else {
+                console.log(frame[l]);
+                filledFrame.push(frame[l]);
+            }
+
+            //console.log(filledFrame);
+        }
+
+        return filledFrame;
     }
 }
