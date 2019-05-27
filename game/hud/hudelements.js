@@ -68,10 +68,11 @@ class Highscore extends Hudtext {
 
 
 class FramedText {
-    constructor(scene, text, parms={}){
+    constructor(scene, text, width, height, parms={}){
         this.scene = scene;
 
-        this.text = this.fillframe(this.create_frame(15, 10, {ver:'║', hor: '═', corner:'╔╗╝╚'}), text, 1).join('\n');
+        //{ver:'║', hor: '═', corner:'╔╗╝╚'} 91 29
+        this.text = this.fillframe(this.create_frame(width, height, parms), text, 1).join('\n');
 
         this.x = (parms.x !== undefined) ? parms.x : 0;
         this.y = (parms.y !== undefined) ? parms.y : 0;
