@@ -1,9 +1,9 @@
 const gameWidth = 1000;
 const gameHeight = 600;
 
-window.onload = () => {
+/*window.onload = () => {
     
-}
+}*/
 
 let gameConfig = {
     type: Phaser.AUTO,
@@ -28,8 +28,15 @@ let game = new Phaser.Game(gameConfig);
 let inputHandler;
 let keyW;
 let player;
-let coin;
 let coinspawner;
+
+let coincnt_text;
+let timer;
+let highscore_text;
+
+let coinscnt = 0;
+
+let framedTextTest;
 
 function preload(){
     
@@ -43,17 +50,28 @@ function create(){
     //player = new Player(this, [{char:'Å', color:'#FFFFFF'}, {char:'--', color:'#FFFFFF'}, {char:'', color:'#FFFFFF'}]);
     player = new Player(this, [{char:'@', color:'#FFFFFF'}], {x:500, y:300, speed:3});
 
-
-    //coin = new Coin(this, {x:400, y:280});
-
     coinspawner = new Coinspawner(this, 5);
 
-    drawCross(this);
+    timer = new Timer(this, '--', 60, {x:gameWidth/2, y:10, origin:'centered'});
+    
+    coincnt_text = new Hudtext(this, 'Coins: ', {x:10, y:10});
+
+    highscore_text = new Highscore(this, 10, {x:gameWidth - 10, y: 10, origin_x:1});
+
+    //framedTextTest = new FramedText(this, '', {x: 100, y: 100});
+
+    //drawCross(this);
 }
     
 function update(){
+    timer.update();
+
+    coincnt_text.settext(`Coins: ${coinscnt}`);
+    
     player.update();
     coinspawner.update();
+
+    highscore_text.update();
 }
 
 /**

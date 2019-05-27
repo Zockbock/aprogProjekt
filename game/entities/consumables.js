@@ -15,12 +15,25 @@ class Coin extends Entity {
         this.update_visuals();
     }
 
+    /**
+     * Callback function for collision event with the Player.
+     * 
+     * Sets its state to collected and destroys the Coin.
+     * Increases the collected coins cont (coinscnt) by one.
+     * @param {*} player the collider of the Player
+     * @param {*} col_coin the collider if the Coin
+     */
     collected(player, col_coin){
         col_coin.entity.got_collected = true;
         col_coin.entity.destroy();
+
+        coinscnt++;
     }
 }
 
+/**
+ * @classdesc A Coinspawner that creates and holds references to coins in its scene.
+ */
 class Coinspawner {
     constructor(scene, max_coins, max_spawndelay=60, min_spawndelay=100) {
         this.scene = scene;

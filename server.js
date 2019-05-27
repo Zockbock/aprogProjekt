@@ -105,13 +105,7 @@ function checkUser(username, password, req, res){
       if (match){
         req.session['sessionValue'] = username;
         const sessionValue = req.session['sessionValue'];
-        res.render(__dirname + '/views/run.ejs', {sessionValue});
-        // if (!req.session['sessionValue']){
-        //   console.log("error")
-        // } else {
-        //   const sessionValue = req.session['sessionValue'];
-        //   console.log(sessionValue);
-        // }
+        res.render(__dirname + '/views/game.ejs', {sessionValue});
       } else {
         console.log("Wrong password or username.");
         res.render('index.ejs');
@@ -165,3 +159,11 @@ app.post('/logout', (req, res) => {
   delete req.session['sessionValue'];
   res.render('index');
 });
+
+// Session auslesen
+  // if (!req.session['sessionValue']){
+  //   console.log("error")
+  // } else {
+  //   const sessionValue = req.session['sessionValue'];
+  //   console.log(sessionValue);
+  // }
