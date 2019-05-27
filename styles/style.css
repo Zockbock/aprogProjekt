@@ -1,5 +1,5 @@
 body{
-    background-color: #222222;
+    background-color: #111111;
     color: greenyellow;
 }
 
@@ -14,4 +14,14 @@ body{
 }
 .btn-login{
     font-size: 20px;
+}
+
+#game{
+    margin-left: auto;
+    margin-right: auto;
+    width: 1000.5px;
+}
+
+#logout{
+    float: right;
 }

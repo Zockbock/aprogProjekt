@@ -105,7 +105,7 @@ function checkUser(username, password, req, res){
       if (match){
         req.session['sessionValue'] = username;
         const sessionValue = req.session['sessionValue'];
-        res.render(__dirname + '/views/game.ejs', {sessionValue});
+        res.render(__dirname + '/views/run.ejs', {sessionValue});
       } else {
         console.log("Wrong password or username.");
         res.render('index.ejs');

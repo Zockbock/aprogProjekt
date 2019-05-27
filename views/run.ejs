@@ -3,10 +3,31 @@
     <head>
         <link rel="stylesheet" type="text/css" href="../styles/style.css"> 
 
+        <script src="/node_modules/phaser/dist/phaser.js"></script>
+        <script src="/node_modules/phaser/dist/phaser-arcade-physics.js"></script>
+        <script src="inputhandler.js"></script>
+        <script src="/entities/entity.js"></script>
+        <script src="/entities/player.js"></script>
+        <script src="/entities/consumables.js"></script>
+        <script src="/hud/hudelements.js"></script>
+        <script src="main.js"></script>
+
         <title>Play</title>
     </head>
     <body>
-        <div id="canvas">
+        <div id="stuff">
+            <h1>Stuff</h1>
+            
+            Wilkommen 
+            <%= sessionValue %>
+                
+
+            <form action="/logout" method="POST">
+                <button type="submit" class="btn-login" id="logout">Logout</button>
+            </form>
+    
+        </div>
+        <div id="game">
 
         </div>
         <div id="tutorial">
@@ -16,15 +37,7 @@
 
         </div>
         <div id="art">
-            
+
         </div>
-        <h1>Stuff</h1>
-        <p>
-            Wilkommen 
-            <%= sessionValue %>
-        </p>
-        <form action="/logout" method="POST">
-            <button type="submit" class="btn-login">Logout</button>
-        </form>
     </body>
 </html>
