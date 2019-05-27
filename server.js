@@ -84,14 +84,14 @@ db.all(sql, (error,rows) => {
       }
     }
 });
-db.all(`SELECT * FROM session`, (err, rows) => {
+db.all(`SELECT * FROM coins`, (err, rows) => {
   if(err){
     if(rows == null){
-      db.run(`CREATE TABLE session (name TEXT NOT NULL)`, (error) => {
+      db.run(`CREATE TABLE coins (amount INTEGER)`, (error) => {
         if(error){
           console.log(error);
         } else {
-          console.log("Initialized table session");
+          console.log("Initialized table coins");
         }
       })
     }
@@ -106,12 +106,6 @@ function checkUser(username, password, req, res){
         req.session['sessionValue'] = username;
         const sessionValue = req.session['sessionValue'];
         res.render(__dirname + '/views/run.ejs', {sessionValue});
-        // if (!req.session['sessionValue']){
-        //   console.log("error")
-        // } else {
-        //   const sessionValue = req.session['sessionValue'];
-        //   console.log(sessionValue);
-        // }
       } else {
         console.log("Wrong password or username.");
         res.render('index.ejs');
@@ -159,3 +153,17 @@ app.post('/register', (req, res) => {
   
   });
 });
+
+// Logout 
+app.post('/logout', (req, res) => {
+  delete req.session['sessionValue'];
+  res.render('index');
+});
+
+// Session auslesen
+  // if (!req.session['sessionValue']){
+  //   console.log("error")
+  // } else {
+  //   const sessionValue = req.session['sessionValue'];
+  //   console.log(sessionValue);
+  // }

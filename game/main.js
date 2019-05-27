@@ -16,7 +16,7 @@ let gameConfig = {
             debug: false
         }
     },
-    backgroundColor: '#000000',
+    backgroundColor: '#111',
     scene:{
         preload: preload,
         create: create,
@@ -59,7 +59,7 @@ function create(){
 
     highscore_text = new Highscore(this, 10, {x:gameWidth - 10, y: 10, origin_x:1});
 
-    frame = new FramedText(this, [], 91, 29, {x: 0, y: -5, ver:'║', hor: '═', corner:'╔╗╝╚'});
+    frame = new FramedText(this, [], 91, 29, {x: 0, y: -5, frame_color: '#555', ver:'║', hor: '═', corner:'╔╗╝╚'});
 
     //drawCross(this);
 }
