@@ -84,14 +84,14 @@ db.all(sql, (error,rows) => {
       }
     }
 });
-db.all(`SELECT * FROM session`, (err, rows) => {
+db.all(`SELECT * FROM coins`, (err, rows) => {
   if(err){
     if(rows == null){
-      db.run(`CREATE TABLE session (name TEXT NOT NULL)`, (error) => {
+      db.run(`CREATE TABLE coins (amount INTEGER)`, (error) => {
         if(error){
           console.log(error);
         } else {
-          console.log("Initialized table session");
+          console.log("Initialized table coins");
         }
       })
     }
@@ -160,6 +160,7 @@ app.post('/register', (req, res) => {
   });
 });
 
+// Logout 
 app.post('/logout', (req, res) => {
   delete req.session['sessionValue'];
   res.render('index');
