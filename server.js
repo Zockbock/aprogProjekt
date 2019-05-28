@@ -167,3 +167,7 @@ app.post('/logout', (req, res) => {
   //   const sessionValue = req.session['sessionValue'];
   //   console.log(sessionValue);
   // }
+
+app.post('/clientpost', (req, res) => {
+  console.log(req.body);
+});

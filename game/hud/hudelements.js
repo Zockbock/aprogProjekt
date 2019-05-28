@@ -168,7 +168,6 @@ class FramedText {
         let filledFrame = new Array();
 
         for(let l = 0; l < frame.length; l++){
-            console.log`l: ${l} text.length: ${text.length}`;
             if(l < text.length + 1 && l > 0){
                 let line = '';
                 let charindex = 0;
@@ -193,11 +192,9 @@ class FramedText {
                         charindex++;
                     } 
                 }
-                console.log(line);
                 filledFrame.push(line);
             }
             else {
-                console.log(frame[l]);
                 filledFrame.push(frame[l]);
             }
 
