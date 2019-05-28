@@ -2,7 +2,7 @@ class Coin extends Entity {
     constructor(scene, parms={}){
         super(scene, [{char:'©', color: '#dab420'}], parms);
 
-        scene.physics.add.overlap(player.collider, this.collider, this.collected);
+        scene.physics.add.overlap(this.scene.player.collider, this.collider, this.collected);
 
         this.skins[0].setOrigin(0.5, 0.5);
         this.rect.displayHeight = 14;

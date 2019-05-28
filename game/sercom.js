@@ -28,7 +28,7 @@ function urlEncodeData(data){
     let urlEncodedData = [];
 
     for(let name in data){
-        urlEncodedData.push(`${name}=${data[name]}`);
+        urlEncodedData.push`${name}=${data[name]}`;
         console.log(urlEncodedData);
     }
 

@@ -14,16 +14,16 @@ class Player extends Entity {
         this.v_x = 0;
         this.v_y = 0;
 
-        if(inputHandler.keydown('up')){
+        if(this.scene.inputHandler.keydown('up')){
             this.v_y += -this.speed;
         }
-        if(inputHandler.keydown('down')){
+        if(this.scene.inputHandler.keydown('down')){
             this.v_y += this.speed;
         }
-        if(inputHandler.keydown('left')){
+        if(this.scene.inputHandler.keydown('left')){
             this.v_x += -this.speed;
         }
-        if(inputHandler.keydown('right')){
+        if(this.scene.inputHandler.keydown('right')){
             this.v_x += this.speed;
         }
 
