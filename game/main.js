@@ -18,6 +18,7 @@ let gameConfig = {
     },
     backgroundColor: '#111',
     scene:[
+        CCMenu_Scene,
         CollectCoins_Scene
     ]
 };        
@@ -25,6 +26,7 @@ let gameConfig = {
 let game = new Phaser.Game(gameConfig);
 
 let coinscnt = 0;
+let highscore = 0;
 
 /**
  * Draws a vertical and horizontal line in the center of the given scene.

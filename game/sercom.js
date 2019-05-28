@@ -15,7 +15,7 @@ function sendData(data){
 
     xhr.open('POST', '/clientpost', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    console.log('Send: ' + urlEncodedData);
+    //console.log('Send: ' + urlEncodedData);
     xhr.send(urlEncodedData);
 }
 
@@ -28,8 +28,7 @@ function urlEncodeData(data){
     let urlEncodedData = [];
 
     for(let name in data){
-        urlEncodedData.push`${name}=${data[name]}`;
-        console.log(urlEncodedData);
+        urlEncodedData.push(`${name}=${data[name]}`);
     }
 
     urlEncodedData = urlEncodedData.join('&').replace(/\s/g, '+');

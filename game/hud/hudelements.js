@@ -81,8 +81,10 @@ class FramedText {
     constructor(scene, text, width, height, parms={}){
         this.scene = scene;
 
-        //{ver:'║', hor: '═', corner:'╔╗╝╚'} 91 29
-        this.text = this.fillframe(this.create_frame(width, height, parms), text, 1).join('\n');
+        let margin = parms.margin ? parms.margin : 0;
+
+        //{ver:'║', hor: '═', corner:'╔╗╝╚'}
+        this.text = this.fillframe(this.create_frame(width, height, parms), text, margin).join('\n');
 
         this.x = (parms.x !== undefined) ? parms.x : 0;
         this.y = (parms.y !== undefined) ? parms.y : 0;
@@ -90,8 +92,11 @@ class FramedText {
         this.frame_color = (parms.frame_color !== undefined) ? parms.frame_color : '#FFFFFF';
         this.frame_base = (parms.frame_char !== undefined) ? parms.frame_char : '0';
 
-
         this.frame = this.scene.add.text(this.x, this.y, this.text, {fontFamily: "Consolas", fontSize: 20, color:this.frame_color});
+
+        if(parms.origin !== undefined){
+            this.frame.setOrigin(parms.origin[0], parms.origin[1]);
+        }
     }
 
     /**

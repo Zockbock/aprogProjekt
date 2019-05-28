@@ -4,7 +4,7 @@ class CollectCoins_Scene extends Phaser.Scene {
     }
 
     preload(){
-
+        coinscnt = 0;
     }
 
     create(){
@@ -20,7 +20,7 @@ class CollectCoins_Scene extends Phaser.Scene {
 
         this.coincnt_text = new Hudtext(this, 'Coins: ', {x:15, y:15});
 
-        this.highscore_text = new Highscore(this, 10, {x:gameWidth - 15, y: 15, origin_x:1});
+        this.highscore_text = new Highscore(this, highscore, {x:gameWidth - 15, y: 15, origin_x:1});
 
         this.frame = new FramedText(this, [], 91, 29, {x: 0, y: -5, frame_color: '#FFFFFF', ver:'║', hor: '═', corner:'╔╗╝╚'});
     }
@@ -34,5 +34,17 @@ class CollectCoins_Scene extends Phaser.Scene {
         this.coinspawner.update();
 
         this.highscore_text.update();
+
+        if(this.timer.ended){
+            this.endgame();
+        }
+    }
+
+    endgame(){
+        if(this.highscore_text.highscore > highscore) {
+            highscore = this.highscore_text.highscore;
+        }
+
+        this.scene.start('ccmenu');
     }
 }
