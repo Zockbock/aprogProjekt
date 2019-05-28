@@ -47,7 +47,7 @@ class Coinspawner {
     }
 
     spawncoin() {
-        let pos = {x: 50 + Math.random() * (gameWidth - 100), y: 50 + Math.random() * (gameHeight - 100)};
+        let pos = {x: 75 + Math.random() * (gameWidth - 150), y: 75 + Math.random() * (gameHeight - 150)};
 
         this.coins.push(new Coin(this.scene, pos));
     }
