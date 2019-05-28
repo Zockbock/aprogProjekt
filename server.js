@@ -168,6 +168,7 @@ app.post('/logout', (req, res) => {
   //   console.log(sessionValue);
   // }
 
-app.post('/clientpost', (req, res) => {
+app.post('/reqdata', (req, res) => {
   console.log(req.body);
+  res.send({response:'string'});
 });

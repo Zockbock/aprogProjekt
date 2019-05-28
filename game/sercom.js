@@ -1,22 +1,29 @@
 /**
- * Sends data from the client to the server 
- * as a POST request using AJAX.
- * @param {Object} data the data to send as an Javascript Object 
- * gets url encoded with {@link urlEncodeData} 
+ * Sends a post request asynchronous in the back to the server.
+ * @param {string} path The request path.
+ * @param {Object} [reqinfo=] Additional information as a json object.
+ *                            Can be used to send data from client to server.
+ * @param {string} [responseType="json"] The data type of the response.
+ * @param {function} [callback=] Callback function called when a response was successfull.
  */
-function sendData(data){
+function sendPostRequest(path, reqinfo={}, responseType='json', callback=(res)=>{}){
     let xhr = new XMLHttpRequest();
-    let urlEncodedData = urlEncodeData(data);
-    
-    // possible arror handling
-    /*xhttp.addEventListener('error', (event) => {
-        console.log('Something went wrong sending data!');
-    });*/
+    //encode request information
+    let urlencoded_reqdata = urlEncodeData(reqinfo);
 
-    xhr.open('POST', '/clientpost', true);
+    // open request and set properties
+    xhr.open('POST', path, true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    //console.log('Send: ' + urlEncodedData);
-    xhr.send(urlEncodedData);
+    xhr.responseType = responseType;
+    // send request
+    xhr.send(urlencoded_reqdata);
+
+    // execute callback on successfull response
+    xhr.onload = () => {
+        if(xhr.readyState == 4 && xhr.status == 200){
+            callback(xhr.response);
+        }
+    };
 }
 
 /**
