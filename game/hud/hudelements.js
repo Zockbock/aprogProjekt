@@ -43,6 +43,10 @@ class Timer extends Hudtext {
         }
         this.frame_cnt++;
         
+        if(this.time <= 10){
+            this.text_ele.setColor('#FF0000');
+        }
+        
         this.settext(this.time);
     }
 }
