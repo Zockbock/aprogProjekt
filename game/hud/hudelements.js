@@ -31,18 +31,24 @@ class Timer extends Hudtext {
         this.max_time = max_time;
         this.time = this.max_time;
         this.frame_cnt = 0;
+
+        this.ended = false;
     }
 
     update(){
+        if(this.time == 0 && this.frame_cnt == 60){
+            this.ended = true;
+        }
+
         if(this.time > 0 && this.frame_cnt == 60){
             this.time--;
         }
-        
+
         if(this.frame_cnt >= 60){
             this.frame_cnt = 0;
         }
         this.frame_cnt++;
-        
+
         if(this.time <= 10){
             this.text_ele.setColor('#FF0000');
         }
