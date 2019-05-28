@@ -16,11 +16,11 @@ class CollectCoins_Scene extends Phaser.Scene {
 
         this.coinspawner = new Coinspawner(this, 5);
 
-        this.timer = new Timer(this, '--', 60, {x:gameWidth/2, y:10, origin:'centered'});
+        this.timer = new Timer(this, '--', 60, {x:gameWidth/2, y:15, origin:'centered'});
 
-        this.coincnt_text = new Hudtext(this, 'Coins: ', {x:10, y:10});
+        this.coincnt_text = new Hudtext(this, 'Coins: ', {x:15, y:15});
 
-        this.highscore_text = new Highscore(this, 10, {x:gameWidth - 10, y: 10, origin_x:1});
+        this.highscore_text = new Highscore(this, 10, {x:gameWidth - 15, y: 15, origin_x:1});
 
         this.frame = new FramedText(this, [], 91, 29, {x: 0, y: -5, frame_color: '#FFFFFF', ver:'║', hor: '═', corner:'╔╗╝╚'});
     }
