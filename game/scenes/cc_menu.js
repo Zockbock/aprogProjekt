@@ -8,6 +8,8 @@ class CCMenu_Scene extends Phaser.Scene {
     }
 
     create(){
+        sendPostRequest('/highscore', {sessionValue:sessionValue}, 'json', res => highscore = res.highscore);
+
         this.inputhandler = new InputHandler(this);
 
         this.frame = new FramedText(this, [], 91, 29, {x: 0, y: -5, frame_color: '#FFFFFF', ver:'║', hor: '═', corner:'╔╗╝╚'});

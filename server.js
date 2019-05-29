@@ -172,3 +172,7 @@ app.post('/reqdata', (req, res) => {
   console.log(req.body);
   res.send({response:'string'});
 });
+
+app.post('/highscore', (req, res) => {
+  res.send({highscore:69});
+});
