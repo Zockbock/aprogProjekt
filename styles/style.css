@@ -7,13 +7,13 @@ body{
 #login{
     margin-left: auto;
     margin-right: auto;
-    margin-top: 20%;
-    width: 300px;
+    margin-top: 15%;
+    width: 15%;
 }
 
 .input{
     font-size: 20px;
-    width: 100%;
+    width: 98%;
     font-family: 'Consolas';
 }
 .btn-login{
@@ -40,10 +40,10 @@ body{
 }
 
 #register{
-    width: 300px;
+    width: 15%;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 20%;
+    margin-top: 15%;
 }
 
 .header{

@@ -67,13 +67,13 @@ let sql = `SELECT * FROM user`;
 db.all(sql, (error,rows) => {
     if(error){
       if(rows == null){
-        db.run(`CREATE TABLE user (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL UNIQUE, pw TEXT NOT NULL)`, (error) => {
+        db.run(`CREATE TABLE user (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL UNIQUE, pw TEXT NOT NULL, highscore INTEGER)`, (error) => {
             if(error){
                 console.log(error.message);
             } else {
               bcrypt.hash("password", saltrounds, (err, hash) => {
                 console.log("Initialized table user");
-                db.run(`INSERT INTO user(name, pw) VALUES ("admin", "${hash}")`, (error) => {
+                db.run(`INSERT INTO user(name, pw, highscore) VALUES ("admin", "${hash}", 42)`, (error) => {
                   if(error){
                     console.log(error.message);
                   }
@@ -84,20 +84,6 @@ db.all(sql, (error,rows) => {
       }
     }
 });
-db.all(`SELECT * FROM coins`, (err, rows) => {
-  if(err){
-    if(rows == null){
-      db.run(`CREATE TABLE coins (name TEXT, highscore INTEGER, FOREIGN KEY(name) REFERENCES user(name))`, (error) => {
-        if(error){
-          console.log(error);
-        } else {
-          console.log("Initialized table coins");
-        }
-      })
-    }
-  }
-});
-
 // Checking User methode
 function checkUser(username, password, req, res){
   db.get(`SELECT * FROM user WHERE name = "${username}"`,(err, user) => {
@@ -135,7 +121,7 @@ app.post('/register', (req, res) => {
   const userpwrep = req.body.pw;
   if(userpw === userpwrep){
     bcrypt.hash(userpw, saltrounds, (err, hash) => {
-      db.run(`INSERT INTO user (name,pw) VALUES('${username}', '${hash}')`, (error) => {
+      db.run(`INSERT INTO user (name,pw,highscore) VALUES("${username}", "${hash}", 0)`, (error) => {
         if(error){
           console.log(error.message);
           const alert = "User already exists.";
@@ -145,7 +131,6 @@ app.post('/register', (req, res) => {
           checkUser(username, userpw, req, res);
         }
       });
-    
     });
   } else {
     const alert = "Password is not the same.";
@@ -168,38 +153,14 @@ app.post('/logout', (req, res) => {
   //   console.log(sessionValue);
   // }
 
-// User Tabelle zurücksetzen
-app.get('/clear', (req, res) => {
-  res.render('index.ejs', (err) => {
-    if(err){
-      console.log(err.message);
-    }
-  });
-  db.run(`DROP TABLE user`, (err) =>{
-    if(err){
-      console.log(err.message);
-    } else {
-      const alert = "Cleared User";
-      db.run(`CREATE TABLE user (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL UNIQUE, pw TEXT NOT NULL)`, (error) => {
-        if(error){
-            console.log(error.message);
-        } else {
-          bcrypt.hash("password", saltrounds, (err, hash) => {
-            console.log("Initialized table user");
-            db.run(`INSERT INTO user(name, pw) VALUES ("admin", "${hash}")`, (error) => {
-              if(error){
-                console.log(error.message);
-              }
-            });
-          });
-        }
-      });    
-    }
-  });
-});
 
 // Server - Game communikation
 app.post('/reqdata', (req, res) => {
   console.log(req.body);
   res.send({response:'string'});
+});
+
+app.post('/highscore', (req,res) => {
+  let hscore = db.get(`SELECT highscore FROM user WHERE name = "${req.session.sessionValue}"`);
+  res.send({highscore: hscore});
 });
