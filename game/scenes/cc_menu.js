@@ -8,7 +8,9 @@ class CCMenu_Scene extends Phaser.Scene {
     }
 
     create(){
-        sendPostRequest('/highscore', {sessionValue:sessionValue}, 'json', res => highscore = res.highscore);
+        if(coinscnt == highscore){
+            sendPostRequest('/highscore', {highscore:highscore});
+        }
 
         this.inputhandler = new InputHandler(this);
 

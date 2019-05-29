@@ -28,6 +28,8 @@ let game = new Phaser.Game(gameConfig);
 let coinscnt = 0;
 let highscore = 0;
 
+sendPostRequest('/highscore', {}, 'json', res => highscore = res.highscore);
+
 /**
  * Draws a vertical and horizontal line in the center of the given scene.
  * For Debugging purposes.
