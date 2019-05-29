@@ -161,6 +161,15 @@ app.post('/reqdata', (req, res) => {
 });
 
 app.post('/highscore', (req,res) => {
-  let hscore = db.get(`SELECT highscore FROM user WHERE name = "${req.session.sessionValue}"`);
-  res.send({highscore: hscore});
+  if(Object.entries(req.body).length === 0){
+    db.get(`SELECT * FROM user WHERE name = "${req.session.sessionValue}"`, (err, user) => {
+      res.send({highscore: user.highscore});
+    });  
+  } else {
+    db.run(`UPDATE user SET highscore = ${req.body.highscore} WHERE name = "${req.session.sessionValue}"`, (err) => {
+      if(err){
+        console.log(err.message);
+      }
+    });
+  }
 });
