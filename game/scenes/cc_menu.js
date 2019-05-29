@@ -8,6 +8,10 @@ class CCMenu_Scene extends Phaser.Scene {
     }
 
     create(){
+        if(coinscnt == highscore){
+            sendPostRequest('/highscore', {highscore:highscore});
+        }
+
         this.inputhandler = new InputHandler(this);
 
         this.frame = new FramedText(this, [], 91, 29, {x: 0, y: -5, frame_color: '#FFFFFF', ver:'║', hor: '═', corner:'╔╗╝╚'});
