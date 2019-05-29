@@ -87,7 +87,7 @@ db.all(sql, (error,rows) => {
 db.all(`SELECT * FROM coins`, (err, rows) => {
   if(err){
     if(rows == null){
-      db.run(`CREATE TABLE coins (amount INTEGER)`, (error) => {
+      db.run(`CREATE TABLE coins (name TEXT, highscore INTEGER, FOREIGN KEY(name) REFERENCES user(name))`, (error) => {
         if(error){
           console.log(error);
         } else {
@@ -168,7 +168,6 @@ app.post('/logout', (req, res) => {
   //   console.log(sessionValue);
   // }
 
-<<<<<<< HEAD
 // User Tabelle zurücksetzen
 app.get('/clear', (req, res) => {
   res.render('index.ejs', (err) => {
@@ -197,9 +196,10 @@ app.get('/clear', (req, res) => {
       });    
     }
   });
-=======
+});
+
+// Server - Game communikation
 app.post('/reqdata', (req, res) => {
   console.log(req.body);
   res.send({response:'string'});
->>>>>>> cc488cdb7461065e5dfc226de23f04a97c4ee88c
 });

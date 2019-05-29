@@ -9,6 +9,16 @@
     </head>
     <body>
        <!--- <div class=""></div> -->
+       <div id="header"><pre>
+            █████╗ ███████╗ ██████╗ █████╗ ██████╗ ██╗██╗ █████╗ 
+           ██╔══██╗██╔════╝██╔════╝██╔══██╗██╔══██╗██║██║██╔══██╗
+           ███████║███████╗██║     ███████║██║  ██║██║██║███████║
+           ██╔══██║╚════██║██║     ██╔══██║██║  ██║██║██║██╔══██║
+           ██║  ██║███████║╚██████╗██║  ██║██████╔╝██║██║██║  ██║
+           ╚═╝  ╚═╝╚══════╝ ╚═════╝╚═╝  ╚═╝╚═════╝ ╚═╝╚═╝╚═╝  ╚═╝
+                       </pre>        
+                       </div>                  
+           
         <div id="login">
             <div class="header">
                 Login
@@ -16,10 +26,10 @@
             <form action="/run" method="POST">
                 <input type="text" required name="name" id="name" placeholder="Username" class="input">
                 <input type="password" required name="pw" id="pw" placeholder="Password" class="input">
-                <button type="submit" class="btn-login">Login</button>
+                <button type="submit" class="btn-login" id="left">Login</button>
             </form>
             <form action="/registerLink" method="POST">
-                <button type="submit" class="btn-login">Register</button>
+                <button type="submit" class="btn-login" id="right">Register</button>
             </form>
         </div>
     </body>
