@@ -11,13 +11,13 @@ class InputHandler {
         this.keyALeft = context.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         this.keyARight = context.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
 
+        this.keyEnter = context.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
     }
     
     keydown(input){
         switch(input[0]){
             case 'u':
                 return this.keyUp.isDown || this.keyAUp.isDown;
-                
             case 'd':
                 return this.keyDown.isDown || this.keyADown.isDown;
 
@@ -26,12 +26,11 @@ class InputHandler {
 
             case 'r':
                 return this.keyRight.isDown || this.keyARight.isDown;
+            
+            case 'e':
+                return this.keyEnter.isDown;
         }
 
         return false;
-    }
-
-    testfunc(){
-        console.log("wow!");
     }
 }

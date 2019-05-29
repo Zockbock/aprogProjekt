@@ -31,17 +31,27 @@ class Timer extends Hudtext {
         this.max_time = max_time;
         this.time = this.max_time;
         this.frame_cnt = 0;
+
+        this.ended = false;
     }
 
     update(){
+        if(this.time == 0 && this.frame_cnt == 60){
+            this.ended = true;
+        }
+
         if(this.time > 0 && this.frame_cnt == 60){
             this.time--;
         }
-        
+
         if(this.frame_cnt >= 60){
             this.frame_cnt = 0;
         }
         this.frame_cnt++;
+
+        if(this.time <= 10){
+            this.text_ele.setColor('#FF0000');
+        }
         
         this.settext(this.time);
     }
@@ -71,8 +81,10 @@ class FramedText {
     constructor(scene, text, width, height, parms={}){
         this.scene = scene;
 
-        //{ver:'║', hor: '═', corner:'╔╗╝╚'} 91 29
-        this.text = this.fillframe(this.create_frame(width, height, parms), text, 1).join('\n');
+        let margin = parms.margin ? parms.margin : 0;
+
+        //{ver:'║', hor: '═', corner:'╔╗╝╚'}
+        this.text = this.fillframe(this.create_frame(width, height, parms), text, margin).join('\n');
 
         this.x = (parms.x !== undefined) ? parms.x : 0;
         this.y = (parms.y !== undefined) ? parms.y : 0;
@@ -80,8 +92,11 @@ class FramedText {
         this.frame_color = (parms.frame_color !== undefined) ? parms.frame_color : '#FFFFFF';
         this.frame_base = (parms.frame_char !== undefined) ? parms.frame_char : '0';
 
-
         this.frame = this.scene.add.text(this.x, this.y, this.text, {fontFamily: "Consolas", fontSize: 20, color:this.frame_color});
+
+        if(parms.origin !== undefined){
+            this.frame.setOrigin(parms.origin[0], parms.origin[1]);
+        }
     }
 
     /**
@@ -168,7 +183,6 @@ class FramedText {
         let filledFrame = new Array();
 
         for(let l = 0; l < frame.length; l++){
-            console.log`l: ${l} text.length: ${text.length}`;
             if(l < text.length + 1 && l > 0){
                 let line = '';
                 let charindex = 0;
@@ -193,11 +207,9 @@ class FramedText {
                         charindex++;
                     } 
                 }
-                console.log(line);
                 filledFrame.push(line);
             }
             else {
-                console.log(frame[l]);
                 filledFrame.push(frame[l]);
             }
 

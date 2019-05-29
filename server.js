@@ -168,6 +168,7 @@ app.post('/logout', (req, res) => {
   //   console.log(sessionValue);
   // }
 
+<<<<<<< HEAD
 // User Tabelle zurücksetzen
 app.get('/clear', (req, res) => {
   res.render('index.ejs', (err) => {
@@ -196,4 +197,9 @@ app.get('/clear', (req, res) => {
       });    
     }
   });
+=======
+app.post('/reqdata', (req, res) => {
+  console.log(req.body);
+  res.send({response:'string'});
+>>>>>>> cc488cdb7461065e5dfc226de23f04a97c4ee88c
 });

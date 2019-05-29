@@ -2,7 +2,7 @@ class Coin extends Entity {
     constructor(scene, parms={}){
         super(scene, [{char:'©', color: '#dab420'}], parms);
 
-        scene.physics.add.overlap(player.collider, this.collider, this.collected);
+        scene.physics.add.overlap(this.scene.player.collider, this.collider, this.collected);
 
         this.skins[0].setOrigin(0.5, 0.5);
         this.rect.displayHeight = 14;
@@ -47,7 +47,7 @@ class Coinspawner {
     }
 
     spawncoin() {
-        let pos = {x: 50 + Math.random() * (gameWidth - 100), y: 50 + Math.random() * (gameHeight - 100)};
+        let pos = {x: 75 + Math.random() * (gameWidth - 150), y: 75 + Math.random() * (gameHeight - 150)};
 
         this.coins.push(new Coin(this.scene, pos));
     }
