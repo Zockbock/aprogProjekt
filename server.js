@@ -103,12 +103,13 @@ function checkUser(username, password, req, res){
   db.get(`SELECT * FROM user WHERE name = "${username}"`,(err, user) => {
     bcrypt.compare(password, user.pw, (err, match) => {
       if (match){
+        const alert = "Wellcome " + username + "!";
         req.session['sessionValue'] = username;
         const sessionValue = req.session['sessionValue'];
-        res.render(__dirname + '/views/run.ejs', {sessionValue});
+        res.render(__dirname + '/views/run.ejs', {sessionValue}/*, {alert}*/);
       } else {
-        console.log("Wrong password or username.");
-        res.render('index.ejs');
+        const alert = "Wrong password or username";
+        res.render('index.ejs'/*, {alert}*/);
         return;
       }  
     });
@@ -119,45 +120,44 @@ function checkUser(username, password, req, res){
 app.post('/run', (req, res) => {
   const name = req.body.name;
   const pw = req.body.pw;
-  if(name === "" && pw === ""){
-    console.log("Please insert a username and password.");
-    res.render('index.ejs');
-  } else {
-    checkUser(name, pw, req, res);
-  }
+  checkUser(name, pw, req, res);
 });
 
-// Register
-var registered = false;
-app.get('/registerLink', (req,res) => {
-  registered = false;
-  res.render('register.ejs', {registered});
+// Register Link
+app.post('/registerLink', (req, res) => {
+  res.render('register.ejs');
 });
 
-// Register send
+// Register 
 app.post('/register', (req, res) => {
   const username = req.body.name;
   const userpw = req.body.pw;
-  bcrypt.hash(userpw, saltrounds, (err, hash) => {
-    db.run(`INSERT INTO user (name,pw) VALUES('${username}', '${hash}')`, (error) => {
-      if(error){
-        console.log(error.message);
-        alert("User already exists.");
-        res.render('register.ejs', {registered}); 
-      } else {
-        console.log("User created");
-        registered = true;
-        res.render('register.ejs', {registered});
-      }
+  const userpwrep = req.body.pw;
+  if(userpw === userpwrep){
+    bcrypt.hash(userpw, saltrounds, (err, hash) => {
+      db.run(`INSERT INTO user (name,pw) VALUES('${username}', '${hash}')`, (error) => {
+        if(error){
+          console.log(error.message);
+          const alert = "User already exists.";
+          res.render('register.ejs'/*, {alert}*/); 
+        } else {
+          const alert = "User created";
+          checkUser(username, userpw, req, res);
+        }
+      });
+    
     });
-  
-  });
+  } else {
+    const alert = "Password is not the same.";
+    res.render('register.ejs'/*, {alert}*/);
+  }
 });
 
 // Logout 
 app.post('/logout', (req, res) => {
   delete req.session['sessionValue'];
-  res.render('index');
+  const alert = "Logout successful.";
+  res.render('index'/*, {alert}*/);
 });
 
 // Session auslesen
@@ -167,3 +167,33 @@ app.post('/logout', (req, res) => {
   //   const sessionValue = req.session['sessionValue'];
   //   console.log(sessionValue);
   // }
+
+// User Tabelle zurücksetzen
+app.get('/clear', (req, res) => {
+  res.render('index.ejs', (err) => {
+    if(err){
+      console.log(err.message);
+    }
+  });
+  db.run(`DROP TABLE user`, (err) =>{
+    if(err){
+      console.log(err.message);
+    } else {
+      const alert = "Cleared User";
+      db.run(`CREATE TABLE user (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL UNIQUE, pw TEXT NOT NULL)`, (error) => {
+        if(error){
+            console.log(error.message);
+        } else {
+          bcrypt.hash("password", saltrounds, (err, hash) => {
+            console.log("Initialized table user");
+            db.run(`INSERT INTO user(name, pw) VALUES ("admin", "${hash}")`, (error) => {
+              if(error){
+                console.log(error.message);
+              }
+            });
+          });
+        }
+      });    
+    }
+  });
+});

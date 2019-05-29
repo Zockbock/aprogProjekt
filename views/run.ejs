@@ -21,7 +21,11 @@
             Wilkommen 
             <%= sessionValue %>
                 
-
+            <% if (sessionValue == "admin") { %>
+                <form action="/clear" method="GET">
+                    <button type="submit" class="btn-login" id="clear">Reset User</button>
+                </form>
+            <% } %>
             <form action="/logout" method="POST">
                 <button type="submit" class="btn-login" id="logout">Logout</button>
             </form>
