@@ -6,16 +6,29 @@
         <title>Register</title>
     </head>
     <body>
-        <% if(registered == false) { %>
+            <div id="header"><pre>
+                    █████╗ ███████╗ ██████╗ █████╗ ██████╗ ██╗██╗ █████╗ 
+                   ██╔══██╗██╔════╝██╔════╝██╔══██╗██╔══██╗██║██║██╔══██╗
+                   ███████║███████╗██║     ███████║██║  ██║██║██║███████║
+                   ██╔══██║╚════██║██║     ██╔══██║██║  ██║██║██║██╔══██║
+                   ██║  ██║███████║╚██████╗██║  ██║██████╔╝██║██║██║  ██║
+                   ╚═╝  ╚═╝╚══════╝ ╚═════╝╚═╝  ╚═╝╚═════╝ ╚═╝╚═╝╚═╝  ╚═╝
+                               </pre>        
+                               </div>                  
+                   
+        <div id="register">
+            <div class="header">
+                Register
+            </div>
             <form action="/register" method="POST">
                 <input type="text" required name="name" id="name" placeholder="Username" class="input">
                 <input type="password" required name="pw" id="pw" placeholder="Password" class="input">
+                <input type="password" required name="pwrep" id="pwrep" placeholder="Repeat Password" class="input">
                 <button type="submit" class="btn-login">Register</button>
             </form>
-        <% } else { %>
-            <form>
-                <button class="btn-login" onclick="window.close()">Close</button>
+            <form action="/" method="GET">
+                <button type="submit" class="btn-login">Back</button>
             </form>
-        <% } %>
+        </div>
     </body>
 </html>

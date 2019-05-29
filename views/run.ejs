@@ -19,17 +19,31 @@
     </head>
     <body>
         <div id="stuff">
-            <h1>Stuff</h1>
             
             Wilkommen 
             <%= sessionValue %>
-                
+            
+            <div id="header"><pre>
+ █████╗ ███████╗ ██████╗ █████╗ ██████╗ ██╗██╗ █████╗ 
+██╔══██╗██╔════╝██╔════╝██╔══██╗██╔══██╗██║██║██╔══██╗
+███████║███████╗██║     ███████║██║  ██║██║██║███████║
+██╔══██║╚════██║██║     ██╔══██║██║  ██║██║██║██╔══██║
+██║  ██║███████║╚██████╗██║  ██║██████╔╝██║██║██║  ██║
+╚═╝  ╚═╝╚══════╝ ╚═════╝╚═╝  ╚═╝╚═════╝ ╚═╝╚═╝╚═╝  ╚═╝
+            </pre>        
+            </div>                  
 
+            <% if (sessionValue == "admin") { %>
+                <form action="/clear" method="GET">
+                    <button type="submit" class="btn-login" id="clear">Reset User</button>
+                </form>
+            <% } %>
             <form action="/logout" method="POST">
                 <button type="submit" class="btn-login" id="logout">Logout</button>
             </form>
     
         </div>
+
         <div id="game">
 
         </div>
