@@ -1,4 +1,14 @@
+/**
+ * Class to draw text on canvas.
+ */
 class Hudtext {
+    /**
+     * Constructor of class Hudtext.
+     * Adds a textelement with given parameters to the scene.
+     * @param {Phaser.Scene} scene the scene that contains the text
+     * @param {String} text the text to be written on screen
+     * @param {Object} parms additional parameters
+     */
     constructor(scene, text, parms={}) {
         this.scene = scene;
 
@@ -18,6 +28,14 @@ class Hudtext {
         }
     }
 
+    animate(){
+
+    }
+
+    /**
+     * Sets the displayed text.
+     * @param {String} newText text to be displayed
+     */
     settext(newText) {
         this.text_ele.setText(newText);
     }

@@ -1,4 +1,12 @@
+/**
+ * Class to read and handle client inputs.
+ */
 class InputHandler {
+    /**
+     * Constructor of class InputHandler.
+     * Creates an inputhandler to read and handle client inputs.
+     * @param {Phaser.Scene} context the scene the inputhandler is located in
+     */
     constructor(context){
 
         this.keyUp = context.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
