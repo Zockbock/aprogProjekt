@@ -19,6 +19,7 @@ let gameConfig = {
     backgroundColor: '#111',
     scene:[
         CCMenu_Scene,
+        CCCountdown_Scene,
         CollectCoins_Scene
     ]
 };        

@@ -20,7 +20,7 @@ class CollectCoins_Scene extends Phaser.Scene {
 
         this.coincnt_text = new Hudtext(this, 'Coins: ', {x:15, y:15});
 
-        this.highscore_text = new Highscore(this, highscore, {x:gameWidth - 15, y: 15, origin_x:1});
+        this.highscore_text = new Highscore(this, highscore, {x:gameWidth - 15, y: 15, origin:[1, 0]});
 
         this.frame = new FramedText(this, [], 91, 29, {x: 0, y: -5, frame_color: '#FFFFFF', ver:'║', hor: '═', corner:'╔╗╝╚'});
     }

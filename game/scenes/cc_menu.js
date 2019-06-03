@@ -25,7 +25,7 @@ class CCMenu_Scene extends Phaser.Scene {
 
     update(){
         if(this.inputhandler.keydown('enter')){
-            this.scene.start('collectcoins');
+            this.scene.start('cccountdown');
         }
     }
 }

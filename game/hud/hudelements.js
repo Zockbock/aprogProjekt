@@ -15,7 +15,7 @@ class Hudtext {
         this.x = (parms.x !== undefined) ? parms.x : 0;
         this.y = (parms.y !== undefined) ? parms.y : 0;
 
-        this.color = (parms.color) ? parms.color : '#FFFFFF'
+        this.color = (parms.color) ? parms.color : '#FFFFFF';
 
         this.text_ele = this.scene.add.text(this.x, this.y, text, {fontFamily: "Consolas", fontSize: 20, color:this.color});
 
@@ -23,13 +23,9 @@ class Hudtext {
             this.text_ele.setOrigin(0.5, 0);
         }
 
-        if(parms.origin_x !== undefined){
-            this.text_ele.setOrigin(parms.origin_x, 0);
+        if(Array.isArray(parms.origin)){
+            this.text_ele.setOrigin(parms.origin[0], parms.origin[1]);
         }
-    }
-
-    animate(){
-
     }
 
     /**
@@ -54,15 +50,19 @@ class Timer extends Hudtext {
         this.time = this.max_time;
         this.frame_cnt = 0;
 
+        this.endtime = parms.endtime ? parms.endtime : 0;
+
+        this.colorchangetime = parms.colorchangetime ? parms.colorchangetime : 10;
+
         this.ended = false;
     }
 
     update(){
-        if(this.time == 0 && this.frame_cnt == 60){
+        if(this.time == this.endtime && this.frame_cnt == 60){
             this.ended = true;
         }
 
-        if(this.time > 0 && this.frame_cnt == 60){
+        if(this.time > this.endtime && this.frame_cnt == 60){
             this.time--;
         }
 
@@ -71,9 +71,11 @@ class Timer extends Hudtext {
         }
         this.frame_cnt++;
 
-        if(this.time <= 10){
+        
+        if(this.time <= this.colorchangetime){
             this.text_ele.setColor('#FF0000');
         }
+        
         
         this.settext(this.time);
     }
