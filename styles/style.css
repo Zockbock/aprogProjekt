@@ -64,3 +64,9 @@ body{
  #right{
      float: right;
  }
+
+ #footer{
+     font-family: 'Consolas';
+     color: white;
+     float: center;
+ }
