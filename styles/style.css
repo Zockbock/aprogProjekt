@@ -84,3 +84,8 @@ body{
  .wellcome{
      float: left;
  }
+ #footer{
+     font-family: 'Consolas';
+     color: white;
+     float: center;
+ }
