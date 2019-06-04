@@ -23,7 +23,7 @@ body{
     border: none;
     color: white;
     margin-top: 2px;
-    width: 120px;
+    width: 40%;
     padding: 2px;
 }
 
@@ -38,6 +38,7 @@ body{
 #logout{
     float: right;
     margin-top: -15px;
+    width: 6%;
 }
 
 #register{
@@ -57,38 +58,39 @@ body{
     height: 120px;
     width: 440px;
     text-align: center;
- }
+}
 
- #left{
-     float: left;
- }
+#left{
+    float: left;
+}
 
- #right{
-     float: right;
- }
+#right{
+    float: right;
+}
 
- #message{
+#message{
     margin: 50px auto 0px auto;
     width: 300px;
     text-align: center;
     background: #ff0000;
     font-size: 20px;
- }
+}
 
- #head{
-     position: absolute;
-     width: 99%;
-     font-size: 20px;
- }
+#head{
+    position: absolute;
+    width: 99%;
+    font-size: 20px;
+}
 
- .wellcome{
-     float: left;
- }
- #footer{
-     font-family: 'Consolas';
-     color: white;
-     width: 335px;
-     height: 135px;
-     margin: 20px auto;
-     font-size: 15px;
- }
+.wellcome{
+    float: left;
+}
+
+#footer{
+    font-family: 'Consolas';
+    color: white;
+    width: 335px;
+    height: 135px;
+    margin: 20px auto;
+    font-size: 15px;
+}
