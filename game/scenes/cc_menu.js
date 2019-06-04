@@ -1,3 +1,7 @@
+/**
+ * @classdesc Menu Scene.
+ * @author Ben Krueger
+ */
 class CCMenu_Scene extends Phaser.Scene {
     constructor(config){
         super({key: 'ccmenu'});

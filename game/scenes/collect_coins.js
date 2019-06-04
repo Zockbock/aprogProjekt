@@ -1,3 +1,7 @@
+/**
+ * @classdesc Collect-Coins scene. The main game.
+ * @author Ben Krueger
+ */
 class CollectCoins_Scene extends Phaser.Scene {
     constructor(config){
         super({key: 'collectcoins'});
@@ -6,13 +10,13 @@ class CollectCoins_Scene extends Phaser.Scene {
     preload(){
         coinscnt = 0;
     }
-
+    
     create(){
 
         this.inputHandler = new InputHandler(this);
 
         //player = new Player(this, [{char:'Å', color:'#FFFFFF'}, {char:'--', color:'#FFFFFF'}, {char:'', color:'#FFFFFF'}]);
-        this.player = new Player(this, [{char:'@', color:'#FFFFFF'}], {x:500, y:300, speed:3});
+        this.player = new Player(this, [{char:'@', color:'#FFFFFF'}], {x:500, y:300, movespeed:225, showcollider:false});
 
         this.coinspawner = new Coinspawner(this, 5);
 
@@ -23,6 +27,7 @@ class CollectCoins_Scene extends Phaser.Scene {
         this.highscore_text = new Highscore(this, highscore, {x:gameWidth - 15, y: 15, origin:[1, 0]});
 
         this.frame = new FramedText(this, [], 91, 29, {x: 0, y: -5, frame_color: '#FFFFFF', ver:'║', hor: '═', corner:'╔╗╝╚'});
+
     }
 
     update(){

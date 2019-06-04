@@ -1,5 +1,9 @@
 /**
- * Class to draw text on canvas.
+ * @author Ben Krueger
+ */
+
+/**
+ * @classdesc Class to draw text on canvas.
  */
 class Hudtext {
     /**

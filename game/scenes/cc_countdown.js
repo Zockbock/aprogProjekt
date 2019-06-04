@@ -1,3 +1,8 @@
+/**
+ * @classdesc Countdown scene. 
+ * Counts down from 3 when before the game starts.
+ * @author Ben Krueger
+ */
 class CCCountdown_Scene extends Phaser.Scene {
     constructor(config){
         super({key:'cccountdown'});

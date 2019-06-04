@@ -1,3 +1,8 @@
+/**
+ * @classdesc The main file for stting up the game.
+ * @author Ben Krueger
+ */
+
 const gameWidth = 1000;
 const gameHeight = 600;
 
@@ -29,6 +34,7 @@ let game = new Phaser.Game(gameConfig);
 let coinscnt = 0;
 let highscore = 0;
 
+// get highscore after login
 sendPostRequest('/highscore', {}, 'json', res => highscore = res.highscore);
 
 /**

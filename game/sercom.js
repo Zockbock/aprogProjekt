@@ -1,4 +1,10 @@
 /**
+ * @file Inhabits functions for background server - client
+ * communication using AJAX.
+ * @author Ben Krueger
+ */
+
+/**
  * Sends a post request asynchronous in the back to the server.
  * @param {string} path The request path.
  * @param {Object} [reqinfo=] Additional information as a json object.

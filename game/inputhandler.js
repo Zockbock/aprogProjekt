@@ -1,5 +1,6 @@
 /**
  * Class to read and handle client inputs.
+ * @author Ben Krueger
  */
 class InputHandler {
     /**

@@ -1,3 +1,8 @@
+/**
+ * @classdesc A coin that can be picked up by the player.
+ * Increases the global coinscnt variable by 1 whne piced up.
+ * @author Ben Krueger
+ */
 class Coin extends Entity {
     constructor(scene, parms={}){
         super(scene, [{char:'©', color: '#dab420'}], parms);
@@ -5,7 +10,7 @@ class Coin extends Entity {
         scene.physics.add.overlap(this.scene.player.collider, this.collider, this.collected);
 
         this.skins[0].setOrigin(0.5, 0.5);
-        this.rect.displayHeight = 14;
+        this.collider.displayHeight = 14;
 
         this.got_collected = false;
     }
@@ -33,6 +38,7 @@ class Coin extends Entity {
 
 /**
  * @classdesc A Coinspawner that creates and holds references to coins in its scene.
+ * @author Ben Krueger
  */
 class Coinspawner {
     constructor(scene, max_coins, max_spawndelay=60, min_spawndelay=100) {

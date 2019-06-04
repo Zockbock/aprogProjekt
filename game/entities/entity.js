@@ -6,33 +6,40 @@
 
 class Entity {
     /**
+     * Constructor of class Entity.
      * @constructor
      * @param  {Scene} scene The scene this entity exists in. 
      * @param  {Object[]} skins The Visual component of the entity in reversed render order. e.g.: [{char:'...', color:'#...'}, ...]
      * @param  {Object} parms={} Additional parameters.
      */
-    constructor(scene, skins, parms={}) {
+    constructor(scene, skins, parms={}){
         // add fields
         this.scene = scene;
 
-        this.x = (parms.x !== undefined) ? parms.x : 10;
-        this.y = (parms.y !== undefined) ? parms.y : 10;
+        this.x = (parms.x !== undefined) ? parms.x : 0;
+        this.y = (parms.y !== undefined) ? parms.y : 0;
         
-        this.speed = (parms.speed !== undefined) ? parms.speed : 1;
-        this.v_x = 0;
-        this.v_y = 0;
-
-        let col_width = (parms.col_width !== undefined) ? parms.col_width : 10;
-        let col_height = (parms.col_height !== undefined) ? parms.col_height : 20;
+        this.velocity = [0, 0];
+        
+        this.movespeed = (parms.movespeed !== undefined) ? parms.movespeed : 1;
         
         // collider setup
-        this.rect = scene.add.zone(this.x, this.y, col_width, col_height);//.setStrokeStyle(1, 0xff0000);
-        this.rect.entity = this;
-        
-        this.collider = scene.physics.add.existing(this.rect);
-        
-        
-        // skins
+        let col_width = (parms.col_width !== undefined) ? parms.col_width : 10;
+        let col_height = (parms.col_height !== undefined) ? parms.col_height : 20;
+
+        let colliderbase;
+        if(parms.showcollider === true){
+            colliderbase = scene.add.rectangle(this.x, this.y, col_width, col_height).setStrokeStyle(1, 0x00FF00);
+        } else {
+            colliderbase = scene.add.zone(this.x, this.y, col_width, col_height);
+        }
+        colliderbase.setOrigin(0.5, 0.5);
+        colliderbase.entity = this;
+
+        this.collider = scene.physics.add.existing(colliderbase);
+        this.collider.body.setCollideWorldBounds(true);
+
+        // skins/visuals
         this.skins = new Array();
 
         // create text objects for skin layers
@@ -43,45 +50,55 @@ class Entity {
 
         // center the origin of the text objects and sync position
         for(let s of this.skins){
-            s.setOrigin(0.5, 0.5);
+            s.setOrigin(0, 0);
             s.x = this.x;
             s.y = this.y;
         }
-        
-        //console.log('New Eintity: ', this);
-    }
-
-    /**
-     * Sets the position of the entity.
-     * @param  {Number} n_x The new x position.
-     * @param  {Number} n_y The new y position.
-     */
-    setpos(n_x, n_y) {
-        this.x = n_x;
-        this.y = n_y;
     }
 
     /**
      * Updates the entity.
      * Overwriten in subclasses for behaviour updates.
-     * By default only updates the visuals components of the entity.
+     * Updates the position and the visuals components of the entity by default.
      */
     update() {
+        this.update_pos();
         this.update_visuals();
     }
     
     /**
+     * Updates the position of the entity 
+     * by setting its postion to the position of its collider.
+     * Sets velocity to [0, 0].
+     */
+    update_pos() {
+        this.collider.body.setVelocityX(this.velocity[0]);
+        this.collider.body.setVelocityY(this.velocity[1]);
+
+        this.x = this.collider.body.x;
+        this.y = this.collider.body.y;
+
+        this.velocity = [0, 0];
+    }
+
+    /**
+     * Add a velocity vector to the velocity.
+     * @param {Number[]} v additional velocity
+     */
+    move(v) {
+        this.velocity[0] += v[0];
+        this.velocity[1] += v[1];
+    }
+
+    /**
      * Updates the position of the visual components 
-     * when the entity position changes.
+     * Used when position changes.
      */
     update_visuals() {
         this.skins.forEach((v) => {
             v.x = this.x;
             v.y = this.y;
         });
-
-        this.rect.x = this.x;
-        this.rect.y = this.y;
     }
 
     /**
@@ -94,7 +111,6 @@ class Entity {
             s.destroy();
         }
         this.collider.destroy();
-        this.rect.destroy();
 
         callback();
     }
