@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="shortcut icon" type="image/x-icon" href="../views/chrome_sknaxHqccY.ico" />    
         <link rel="stylesheet" type="text/css" href="../styles/style.css"> 
-        
         <title>
             Welcome to Ascadiia
         </title>
@@ -18,21 +18,25 @@
 ╚═╝  ╚═╝╚══════╝ ╚═════╝╚═╝  ╚═╝╚═════╝ ╚═╝╚═╝╚═╝  ╚═╝
                        </pre>        
                        </div>                  
-           
-        <div id="login">
-            <div class="header">
-                Login
-            </div>
-
-            <form action="/run" method="POST">
-                <input type="text" required name="name" id="name" placeholder="Username" class="input">
-                <input type="password" required name="pw" id="pw" placeholder="Password" class="input">
-                <button type="submit" class="btn-login" id="left">Login</button>
-            </form>
-            <form action="/registerLink" method="POST">
-                <button type="submit" class="btn-login" id="right">Register</button>
-            </form>
+       
+<div class="window">
+<div id="login">
+    <div class="header">
+            Login
         </div>
+
+        <form action="/run" method="POST">
+            <input type="text" required name="name" id="name" placeholder="Username" class="input">
+            <input type="password" required name="pw" id="pw" placeholder="Password" class="input">
+            <button type="submit" class="btn-login" id="left">Login</button>
+        </form>
+        <form action="/registerLink" method="POST">
+            <button type="submit" class="btn-login" id="right">Register</button>
+        </form>
+    </div>
+</div>
+    <% include border %>
+
 
         <% if(message) { %>
             <div id="message">Wrong username or password</div>
