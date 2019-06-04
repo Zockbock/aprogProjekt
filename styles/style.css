@@ -30,7 +30,7 @@ body{
 #game{
     margin-left: auto;
     margin-right: auto;
-    margin-top: 2.5%;
+    margin-top: 2%;
     width: 1000.5px;
     height: 600.5px;
 }
@@ -87,5 +87,8 @@ body{
  #footer{
      font-family: 'Consolas';
      color: white;
-     float: center;
+     width: 335px;
+     height: 135px;
+     margin: 20px auto;
+     font-size: 15px;
  }
