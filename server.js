@@ -37,8 +37,10 @@ app.listen(port, function(){
 });
 
 // Index 
+let message = false;
 app.get('/', function(req, res){
-    res.render(__dirname + '/views/index.ejs');
+  message = false;
+  res.render(__dirname + '/views/index.ejs', {message});
 });
 
 // Game
@@ -65,40 +67,50 @@ app.use(express.static(require('path').join(__dirname, "/")));
 // Tabellen initialisieren
 let sql = `SELECT * FROM user`;
 db.all(sql, (error,rows) => {
-    if(error){
-      if(rows == null){
-        db.run(`CREATE TABLE user (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL UNIQUE, pw TEXT NOT NULL, highscore INTEGER)`, (error) => {
-            if(error){
+  if(error){
+    if(rows == null){
+      db.run(`CREATE TABLE user (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL UNIQUE, pw TEXT NOT NULL, highscore INTEGER)`, (error) => {
+        if(error){
+          console.log(error.message);
+        } else {
+          bcrypt.hash("password", saltrounds, (err, hash) => {
+            console.log("Initialized table user");
+            db.run(`INSERT INTO user(name, pw, highscore) VALUES ("admin", "${hash}", 42)`, (error) => {
+              if(error){
                 console.log(error.message);
-            } else {
-              bcrypt.hash("password", saltrounds, (err, hash) => {
-                console.log("Initialized table user");
-                db.run(`INSERT INTO user(name, pw, highscore) VALUES ("admin", "${hash}", 42)`, (error) => {
-                  if(error){
-                    console.log(error.message);
-                  }
-                });
-              });
-            }
-        });
-      }
+              }
+            });
+          });
+        }
+      });
     }
+  }
 });
+
 // Checking User methode
 function checkUser(username, password, req, res){
-  db.get(`SELECT * FROM user WHERE name = "${username}"`,(err, user) => {
-    bcrypt.compare(password, user.pw, (err, match) => {
-      if (match){
-        const alert = "Wellcome " + username + "!";
-        req.session['sessionValue'] = username;
-        const sessionValue = req.session['sessionValue'];
-        res.render(__dirname + '/views/run.ejs', {sessionValue}/*, {alert}*/);
-      } else {
-        const alert = "Wrong password or username";
-        res.render('index.ejs'/*, {alert}*/);
-        return;
-      }  
-    });
+  db.all(`SELECT name FROM user WHERE name = "${username}"`, (error, rows) => {
+    if(rows.length == 0){
+      message = true;
+      res.render('index.ejs', {message});  
+    } else {
+      db.get(`SELECT * FROM user WHERE name = "${username}"`,(err, user) => {
+        bcrypt.compare(password, user.pw, (err, match) => {
+          if (match){
+            message = false;
+            const alert = "Wellcome " + username + "!";
+            req.session['sessionValue'] = username;
+            const sessionValue = req.session['sessionValue'];
+            res.render(__dirname + '/views/run.ejs', {sessionValue}/*, {alert}*/);
+          } else {
+            const alert = "Wrong password or username";
+            message = true;
+            res.render('index.ejs', {message}/*, {alert}*/);
+            return;
+          }  
+        });
+      });
+    }
   });
 }
 
@@ -142,7 +154,8 @@ app.post('/register', (req, res) => {
 app.post('/logout', (req, res) => {
   delete req.session['sessionValue'];
   const alert = "Logout successful.";
-  res.render('index'/*, {alert}*/);
+  message = false;
+  res.render('index', {message}/*, {alert}*/);
 });
 
 // Session auslesen

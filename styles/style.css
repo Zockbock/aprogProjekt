@@ -37,6 +37,7 @@ body{
 
 #logout{
     float: right;
+    margin-top: -15px;
 }
 
 #register{
@@ -48,6 +49,7 @@ body{
 
 .header{
     font-size: 20px;
+    position: relative;
 }
 
 #header {
@@ -63,4 +65,22 @@ body{
 
  #right{
      float: right;
+ }
+
+ #message{
+    margin: 50px auto 0px auto;
+    width: 300px;
+    text-align: center;
+    background: #ff0000;
+    font-size: 20px;
+ }
+
+ #head{
+     position: absolute;
+     width: 99%;
+     font-size: 20px;
+ }
+
+ .wellcome{
+     float: left;
  }

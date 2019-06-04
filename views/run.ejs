@@ -20,9 +20,15 @@
     </head>
     <body>
         <div id="stuff">
-            
-            Wilkommen 
-            <%= sessionValue %>
+            <div id="head">
+                <div id="wellcome">
+                    Wellcome 
+                    <%= sessionValue %>
+                </div>
+                <form action="/logout" method="POST">
+                    <button type="submit" class="btn-login" id="logout">Logout</button>
+                </form>
+            </div>
             
             <div id="header"><pre>
  █████╗ ███████╗ ██████╗ █████╗ ██████╗ ██╗██╗ █████╗ 
@@ -33,10 +39,6 @@
 ╚═╝  ╚═╝╚══════╝ ╚═════╝╚═╝  ╚═╝╚═════╝ ╚═╝╚═╝╚═╝  ╚═╝
             </pre>        
             </div>                  
-
-            <form action="/logout" method="POST">
-                <button type="submit" class="btn-login" class="logout">Logout</button>
-            </form>
     
         </div>
 

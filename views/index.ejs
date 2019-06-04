@@ -32,5 +32,10 @@
                 <button type="submit" class="btn-login" id="right">Register</button>
             </form>
         </div>
+
+        <% if(message) { %>
+            <div id="message">Wrong username or password</div>
+        <% } %>
+
     </body>
 </html>
